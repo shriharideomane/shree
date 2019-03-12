@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Paper Generator</title>
+    <meta charset="utf-8">
+
+    <!-- Chrome, Firefox OS and Opera -->
+    <meta name="theme-color" content="#d6e9c6">
+    <!-- Windows Phone -->
+    <meta name="msapplication-navbutton-color" content="#d6e9c6">
+    <!-- iOS Safari -->
+    <meta name="apple-mobile-web-app-status-bar-style" content="#d6e9c6">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="icon" sizes="192x192" href="../images/ic_launcher.png">
+
+    <!--<link rel="stylesheet" href="../less/bootstrap.min.css">
+	<script src="../js/jquery.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>-->
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+</head>
+
+<script type="text/javascript">
+        // Load the Google Transliterate API
+        google.load("elements", "1", {
+            packages: "transliteration"
+        });
+
+        function onLoad() {
+            var options = {
+                sourceLanguage: google.elements.transliteration.LanguageCode.ENGLISH,
+                destinationLanguage: [google.elements.transliteration.LanguageCode.HINDI],
+                shortcutKey: 'ctrl+g',
+                transliterationEnabled: true
+            };
+
+            // Create an instance on TransliterationControl with the required options.
+            var control = new google.elements.transliteration.TransliterationControl(options);
+
+            // Enable transliteration in the textbox with id 'transliterateTextarea'.
+            control.makeTransliteratable(['question', 'option1', 'option2', 'option3', 'option4', 'heading', 'subheading', 'duration', lqop1, lqop2, lqop3, lqop4, lqop5, lqop6, lqop7, lqop8, rqop1, rqop2, rqop3, rqop4, rqop5, rqop6, rqop7, rqop8]);
+        }
+        google.setOnLoadCallback(onLoad); 
+</script>
+
+<script>
+        $(function() {
+
+			$("#btnUpdate").hide();
+			$(".collapse").collapse('hide');
+            // Print Function
+            function print() {
+                window.print();
+            };
+ 
+            // OnLoad set spinner listener
+            $("#paperSubject").on('click', 'li a', function() {
+                $('#paperSubjectBtn').text($(this).text());
+                $('#paperSubjectBtn').val($(this).text());
+            });
+            // Tab Navigation
+            $('.nav-tabs a').click(function(e) {
+                var target = $(e.target).attr("href");
+                $("#printpaper").hide(1000);
+                if (target == "#tab1success") {
+                    location.reload(true);
+                } else if (target == "#tab2success") {
+                    readQuestion();
+                } else if (target == "#tab3success") {
+                    readHeading();
+                } else if (target == "#tab4success") {
+                    loadPreview();
+                    $("#printpaper").show();
+                } else if (target == "#tab5success") {
+                    //loadSettings
+                }
+            });
+ 
+			$("#btnUpdate").on('click',function() { 
+				update();
+			});
+
+            // OnLoad Initialize Database
+            initDB();
+        });
+
+        function setListListnear() {
+
+            $('.list-group.checked-list-box .list-group-item').each(function() {
+                // Settings
+                var $widget = $(this),
+                    $checkbox = $('<input type="checkbox" class="hidden" />'),
+                    color = ($widget.data('color') ? $widget.data('color') : "primary"),
+                    style = ($widget.data('style') == "button" ? "btn-" : "list-group-item-"),
+                    settings = {
+                        on: {
+                            icon: 'glyphicon glyphicon-check'
+                        },
+                        off: {
+                            icon: 'glyphicon glyphicon-unchecked'
+                        }
+                    };
+
+                $widget.css('cursor', 'pointer')
+                $widget.append($checkbox);
+
+                // Event Handlers
+                $widget.on('click', function() {
+                    $checkbox.prop('checked', !$checkbox.is(':checked'));
+                    $checkbox.triggerHandler('change');
+                    updateDisplay();
+                });
+                $checkbox.on('change', function() {
+                    updateDisplay();
+                });
+
+
+                // Actions
+                function updateDisplay() {
+                    var isChecked = $checkbox.is(':checked');
+
+                    // Set the button's state
+                    $widget.data('state', (isChecked) ? "on" : "off");
+
+                    // Set the button's icon
+                    $widget.find('.state-icon')
+                        .removeClass()
+                        .addClass('state-icon ' + settings[$widget.data('state')].icon);
+
+                    // Update the button's color
+                    if (isChecked) {
+                        $widget.addClass(style + color + ' active');
+                    } else {
+                        $widget.removeClass(style + color + ' active');
+                    }
+                }
+
+                // Initialization
+                function init() {
+
+                    if ($widget.data('checked') == true) {
+                        $checkbox.prop('checked', !$checkbox.is(':checked'));
+                    }
+
+                    updateDisplay();
+
+                    // Inject the icon if applicable
+                    if ($widget.find('.state-icon').length == 0) {
+                        $widget.prepend('<span class="state-icon ' + settings[$widget.data('state')].icon + '"></span>');
+                    }
+                }
+                init();
+            });
+
+            /*$('#get-checked-data').on('click', function(event) {
+                event.preventDefault();
+                var checkedItems = {},
+                    counter = 0;
+                $("#check-list-box li.active").each(function(idx, li) {
+                    checkedItems[counter] = $(li).text;
+                    counter++;
+                });
+                $('#display-json').html(JSON.stringify(checkedItems, null, '\t'));
+            });*/
+        }
+
+        function clearForm(formId) {
+            $("#" + formId)[0].reset();
+        };
+        var db;
+
+        function initDB() {
+            db = openDatabase('db_qpg', '1.0', 'QPG', 2 * 1024 * 1024);
+            db.transaction(function(tx) {
+                //tx.executeSql('DROP TABLE QUESTIONS');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS QUESTIONS (subject, type, question, qoptions, option1, option2, option3, option4, ansindex, mark)');
+                tx.executeSql('CREATE TABLE IF NOT EXISTS HEADING (heading, subheading, date, totalmark, duration)');
+                //tx.executeSql('INSERT INTO QUESTIONS (subject, question, option1, option2, option3, option4, ansindex, mark) VALUES ("subject", "question", "option1", "option2", "option3", "option4", "ansindex", "mark")');
+                //tx.executeSql('UPDATE QUESTIONS SET subject="manoj" WHERE rowid=2');
+                //tx.executeSql('DELETE FROM QUESTIONS WHERE rowid=4');
+            });
+
+        }
+
+        function deleteQ(rowid) {
+            db.transaction(function(tx) {
+                tx.executeSql('DELETE FROM QUESTIONS WHERE rowid=?',[rowid],
+				function(tx, result) {
+					readQuestion();
+				},
+				function(tx, error) {
+					alert("Error:" + error.message);
+				});
+            });
+			
+        }
+
+        function update() {
+
+			var type = $('#QOptions').hasClass('in');
+			var qOptions = "";
+			if(type){
+				qOptions = '{ "left" : ["'
+				+$("#lqop1").val()+'", "'
+				+$("#lqop2").val()+'", "'
+				+$("#lqop3").val()+'", "'
+				+$("#lqop4").val()+'", "'
+				+$("#lqop5").val()+'", "'
+				+$("#lqop6").val()+'", "'
+				+$("#lqop7").val()+'", "'
+				+$("#lqop8").val()+'"], "right" : ["'
+				+$("#rqop1").val()+'", "'
+				+$("#rqop2").val()+'", "'
+				+$("#rqop3").val()+'", "'
+				+$("#rqop4").val()+'", "'
+				+$("#rqop5").val()+'", "'
+				+$("#rqop6").val()+'", "'
+				+$("#rqop7").val()+'", "'
+				+$("#rqop8").val()+'"]}';
+			}
+			
+			var rowid = $("#btnUpdate").val();
+            var subject = $("#paperSubjectBtn").val();
+            var question = $("#question").val();
+            var option1 = $("#option1").val();
+            var option2 = $("#option2").val();
+            var option3 = $("#option3").val();
+            var option4 = $("#option4").val();
+            var ansindex = $("#answerindex").val();
+            var mark = $("#mark").val();
+
+            if(ansindex != 0 || ansindex != ""){
+                db.transaction(function(tx) {
+                    tx.executeSql('UPDATE QUESTIONS SET subject=?, type=?, question=?, qOptions=?, option1=?, option2=?, option3=?, option4=?, ansindex=?, mark=? WHERE rowid=?',[subject, type, question, qOptions, option1, option2, option3, option4, ansindex, mark, rowid],
+                    function(tx, result) {
+                        alert("Question Update Successfully");
+
+                        //** Redirect to tab 2 After Successful update
+                        $("#btnUpdate").hide();
+                        $("#btnAdd").show();
+                        clearForm('addquestion');
+                        activeTab("tab2success");
+                        readQuestion();
+                    },
+                    function(tx, error) {
+                        alert("Error:" + error.message);
+                    });
+                });
+            }else{
+                alert("Answer index can't be 0 or blank");
+            }
+			
+        }
+
+        function insert() {
+
+            var subject = $("#paperSubjectBtn").val();
+			var type = $('#QOptions').hasClass('in');
+			var qOptions = "";
+			if(type){
+				qOptions = '{ "left" : ["'
+				+$("#lqop1").val()+'", "'
+				+$("#lqop2").val()+'", "'
+				+$("#lqop3").val()+'", "'
+				+$("#lqop4").val()+'", "'
+				+$("#lqop5").val()+'", "'
+				+$("#lqop6").val()+'", "'
+				+$("#lqop7").val()+'", "'
+				+$("#lqop8").val()+'"], "right" : ["'
+				+$("#rqop1").val()+'", "'
+				+$("#rqop2").val()+'", "'
+				+$("#rqop3").val()+'", "'
+				+$("#rqop4").val()+'", "'
+				+$("#rqop5").val()+'", "'
+				+$("#rqop6").val()+'", "'
+				+$("#rqop7").val()+'", "'
+				+$("#rqop8").val()+'"]}';
+			}
+			
+            var question = $("#question").val();
+            var option1 = $("#option1").val();
+            var option2 = $("#option2").val();
+            var option3 = $("#option3").val();
+            var option4 = $("#option4").val();
+            var ansindex = $("#answerindex").val();
+            var mark = $("#mark").val();
+
+            if(question == ""){
+                alert("Please enter question");
+            }else if(ansindex != 0 || ansindex != ""){
+                db.transaction(function(tx) {
+
+                        tx.executeSql('INSERT INTO QUESTIONS (subject, type, question, qoptions, option1, option2, option3, option4, ansindex, mark) VALUES (?, ?, ?, ?, ?, ?, ? ,?, ?, ?)', [subject, type, question, qOptions, option1, option2, option3, option4, ansindex, mark],
+                        function(tx, result) {
+                            alert("Question Added Successfully");
+                            clearForm('addquestion');
+                        },
+                        function(tx, error) {
+                            alert("Error:" + error.message);
+                        });
+                });
+            }else{
+                alert("Answer index can't be 0 or blank");
+            }
+        }
+ 
+
+        function saveHeading() {
+
+            var heading = $("#heading").val();
+            var subheading = $("#subheading").val();
+            var date = $("#date").val();
+            var totalmark = $("#totalmark").val();
+            var duration = $("#duration").val();
+
+            db.transaction(function(tx) {
+                tx.executeSql('DELETE FROM HEADING WHERE rowid=1');
+            });
+            db.transaction(function(tx) {
+                tx.executeSql('INSERT INTO HEADING (heading, subheading, date, totalmark, duration) VALUES (?, ?, ?, ?, ?)', [heading, subheading, date, totalmark, duration],
+                    function(tx, result) {
+                        alert("Heading Added Successfully");
+                    },
+                    function(tx, error) {
+                        alert("Error:" + error.message);
+                    });
+
+            });
+        }
+		function parseMe(obj){
+			return JSON.stringify(obj).replace("'", "&apos;");
+		}
+        function readQuestion() {
+
+            db.transaction(function(tx) {
+                tx.executeSql('SELECT rowid,* FROM QUESTIONS', [], function(tx, results) {
+                    var len = results.rows.length,i;
+                    var list = "";
+                    for (i = 0; i < len; i++) {
+                        var obj = results.rows.item(i);
+						console.log('Item: ', obj);
+						list += '<li class="list-group-item"><label style="width:70%;word-wrap: break-word;font-weight: normal;">' + obj.question + '</label>';
+						list += '<div class="btn-group pull-right">';
+						list += '<button type="button" data-animal-type=\''+parseMe(obj)+'\' onClick="confirmEdit(this)" class="btn btn-default btn-xs">Edit</button>';
+						list += '<button type="button" data-animal-type=\''+results.rows.item(i).rowid+'\' onClick="confirmDelete(this)" class="btn btn-default btn-xs">Delete</button>';
+						list += '</div>';
+						list += '</li>';
+ 
+                    }
+                    $("#check-list-box").html(list);
+					
+					//Enable When u want multiple check function
+                    //setListListnear();
+					
+                }, null);
+            });
+        }
+
+        //------- ----------------------- ------------//
+        //------- Import Export Database -------------//
+        //------- ----------------------- ------------//
+
+        function clearDataBase() {
+            var result = confirm("Want to delete all data?");
+            if (result) {
+               db.transaction(function(tx) {
+                    tx.executeSql('DROP TABLE QUESTIONS');
+                    tx.executeSql('DROP TABLE HEADING');
+                    document.location.reload();
+                });
+            }
+        }
+
+        function importDataBase(event){
+
+            var files = event.target.files;
+            for (var i = 0, f; f = files[i]; i++) {
+              var reader = new FileReader();
+              reader.onload = (function(theFile) {
+                return function(e) {
+                  var jObj = JSON.parse(e.target.result);
+                  var headingItem = jObj.HEADING[0];
+
+                    // Load Heading Table
+                    if(headingItem != null){
+                        db.transaction(function(tx) {
+                            tx.executeSql('INSERT INTO HEADING (heading, subheading, date, totalmark, duration) VALUES (?, ?, ?, ?, ?)', [headingItem.heading, headingItem.subheading, headingItem.date, headingItem.totalmark, headingItem.duration],
+                                function(tx, result) {
+                                    //alert("Heading Loaded Successfully");
+                                },
+                                function(tx, error) {
+                                    alert("Error:" + error.message);
+                                });
+                        });
+                    }
+
+                    // Load Question Table
+                    var questions = jObj.QUESTIONS;
+                    if(questions != null){
+                        for (i = 0; i < Object.keys(questions).length; i++) {
+                            var questionItem = questions[i];
+                            db.transaction(function(tx) {
+                                tx.executeSql('INSERT INTO QUESTIONS (subject, type, question, qoptions, option1, option2, option3, option4, ansindex, mark) VALUES (?, ?, ?, ?, ?, ?, ? ,?, ?, ?)', [questionItem.subject, questionItem.type, questionItem.question, questionItem.qOptions, questionItem.option1, questionItem.option2, questionItem.option3, questionItem.option4, questionItem.ansindex, questionItem.mark],
+                                function(tx, result) {
+                                    //alert("Question Added Successfully");
+                                    if(i == Object.keys(questions).length){
+                                        readQuestion();
+                                        activeTab("tab2success");
+                                    }
+                                },
+                                function(tx, error) {
+                                    alert("Error:" + error.message);
+                                });
+                            });
+                        }
+                    }
+                };
+              })(f);
+              reader.readAsText(f);
+            }
+
+        }
+
+        var combinedResult = { HEADING:'', QUESTIONS:''};
+
+        function downloadJsonFile() {
+            var a = document.createElement("a");
+            var file = new Blob([JSON.stringify(combinedResult)], {type: 'application/json'});
+            a.href = URL.createObjectURL(file);
+            a.download = 'json.txt';
+            a.click();
+        }
+
+        function exportDataBase() {
+            db.transaction(function(tx) {
+
+                tx.executeSql('SELECT * FROM HEADING', [], function(tx, results) {
+                    //console.log('Item: ', results);
+                    combinedResult.HEADING = results.rows;
+
+                    tx.executeSql('SELECT rowid,* FROM QUESTIONS', [], function(tx, results) {
+                        //console.log('Results: ', results);
+                        combinedResult.QUESTIONS = results.rows;
+
+                        //console.log('Combine: ', JSON.stringify(combinedResult));
+                        setTimeout('downloadJsonFile()', 3000);
+
+                    }, null);
+
+                }, null);
+            });
+        }
+
+        //------- ----------------------- ------------//
+        //------- Import Export Database -------------//
+        //------- ----------------------- ------------//
+
+		function activeTab(tab){
+			$('.nav-tabs a[href="#' + tab + '"]').tab('show');
+		};
+		function confirmDelete(jObject){
+			var rowId = jObject.getAttribute("data-animal-type");
+			$('.modal-title').html();
+			$('#deleteModal').modal();
+			confirmDeleteModal(rowId);
+		}
+		function confirmEdit(jObject){
+
+			var replaceSlash = jObject.getAttribute("data-animal-type").replace(/\\/g, "");
+			var removeObjectQuote = replaceSlash.replace('":"{', '":{').replace(']}"', ']}').replace(/[\u0000-\u0019]+/g,"");
+			console.log(removeObjectQuote);
+			var obj = JSON.parse(removeObjectQuote);
+			
+			activeTab("tab1success");
+				if(obj.type){
+				
+					var objQOptions = obj.qoptions;
+					if(objQOptions !== "undefined" && objQOptions != ""){
+						$(".collapse").collapse('show');
+						$("#lqop1").text(objQOptions.left[0]);
+						$("#lqop2").text(objQOptions.left[1]);
+						$("#lqop3").text(objQOptions.left[2]);
+						$("#lqop4").text(objQOptions.left[3]);
+						$("#lqop5").text(objQOptions.left[4]);
+						$("#lqop6").text(objQOptions.left[5]);
+						$("#lqop7").text(objQOptions.left[6]);
+						$("#lqop8").text(objQOptions.left[7]);
+						$("#rqop1").text(objQOptions.right[0]);
+						$("#rqop2").text(objQOptions.right[1]);
+						$("#rqop3").text(objQOptions.right[2]);
+						$("#rqop4").text(objQOptions.right[3]);
+						$("#rqop5").text(objQOptions.right[4]);
+						$("#rqop6").text(objQOptions.right[5]);
+						$("#rqop7").text(objQOptions.right[6]);
+						$("#rqop8").text(objQOptions.right[7]);
+					}else{
+						$(".collapse").collapse('hide');
+					}
+				}else{
+					$(".collapse").collapse('hide');
+				}
+				$("#btnUpdate").show();
+				$("#btnUpdate").val(obj.rowid);
+				$("#btnAdd").hide();
+				$('#paperSubjectBtn').text(obj.subject);
+				$('#paperSubjectBtn').val(obj.subject);
+				$("#question").text(obj.question);
+				$("#option1").text(obj.option1);
+				$("#option2").text(obj.option2);
+				$("#option3").text(obj.option3);
+				$("#option4").text(obj.option4);
+				$("#answerindex").val(obj.ansindex);
+				$("#mark").val(obj.mark);
+		}
+		function confirmDeleteModal(id){
+			$('#deleteModal').modal();
+			$('#deleteButton').html('<a class="btn btn-danger" onclick="deleteData('+id+')">Delete</a>');
+		}     
+		function deleteData(id){
+			// do your stuffs with id
+			deleteQ(id);
+			$("#successMessage").html("Record With id "+id+" Deleted successfully!");
+			$('#deleteModal').modal('hide'); // now close modal
+			//refresh tab2
+			activeTab("tab2success");
+		}
+        function readHeading() {
+
+            db.transaction(function(tx) {
+                tx.executeSql('SELECT * FROM HEADING', [], function(tx, results) {
+                    var len = results.rows.length,
+                        i;
+                    //alert(len);
+                    if (len == 1) {
+                        $("#heading").val(results.rows.item(i).heading);
+                        $("#subheading").val(results.rows.item(i).subheading);
+                        $("#date").val(results.rows.item(i).date);
+                        $("#totalmark").val(results.rows.item(i).totalmark);
+                        $("#duration").val(results.rows.item(i).duration);
+                    }
+                }, null);
+            });
+        }
+
+        function loadPreview() {
+            var tQ = 0;
+            db.transaction(function(tx) {
+                tx.executeSql('SELECT * FROM QUESTIONS', [], function(tx, results) {
+                    var len = results.rows.length,i;
+                    tQ = len;
+                    var list = ""; var obj;
+                    for (i = 0; i < len; i++) {
+                        var isPairingAvailable = false;
+						var table = "<table width='100%' style='word-wrap:break-word; table-layout: fixed;'>";
+						if(results.rows.item(i).type){
+						    obj = results.rows.item(i).qoptions.toString().replace(/\\/g, "").replace('":"{', '":{').replace(']}"', ']}').replace(/[\u0000-\u0019]+/g,"");
+							if(obj !== "undefined" && obj != ""){
+							    isPairingAvailable = true;
+                                var objSub = JSON.parse(obj);
+                                if(Object.keys(objSub).length > 0){
+                                    for (j = 0; j < 8; j++) {
+                                        table += "<tr><td style='padding-left:30px;'>"+objSub.left[j]+"</td><td>"+objSub.right[j]+"</td></tr>";
+                                    }
+                                }
+                            }
+						}
+						table += "</table>";
+						var addPairings = isPairingAvailable ? '<tr><td colspan="2">'+table+'</td></tr>' : '';
+                        list += '<table class="table borderless" style="word-wrap:break-word; table-layout: fixed;"><tbody><tr><td align="left"><b>' + (i + 1) + ') ' + results.rows.item(i).question + '</td><td align="right"><span>'+ results.rows.item(i).mark +'</span></td></tr>'+ addPairings +'<tr><td align="left" width="50%" style="padding-left:30px;">1. ' + results.rows.item(i).option1 + '</td><td align="left" width="50%">2. ' + results.rows.item(i).option2 + '</td></tr><tr><td align="left" width="50%" style="padding-left:30px;">3. ' + results.rows.item(i).option3 + '</td><td align="left" width="50%">4. ' + results.rows.item(i).option4 + '</td></tr></tbody></table>';
+                        isPairingAvailable = false;
+                    }
+                    $("#tblContent").html(list);
+                }, null);
+            });
+
+            db.transaction(function(tx) {
+                tx.executeSql('SELECT * FROM HEADING', [], function(tx, results) {
+                    var len = results.rows.length, i;
+                    for (i = 0; i < len; i++) {
+                        $("#pHeading").html(results.rows.item(i).heading);
+                        $("#pSubHeading").html(results.rows.item(i).subheading);
+                        $("#pDate").html("Date : " + results.rows.item(i).date);
+                        $("#pMarks").html("Total Marks : " + results.rows.item(i).totalmark);
+                        $("#pQuestions").html("Total Questions : " + tQ);
+                        $("#pTime").html("Time : " + results.rows.item(i).duration);
+                    }
+                }, null);
+            });
+        }
+        function myFunction() {
+            var x = document.getElementById("myTopnav");
+            if (x.className === "topnav") {
+                x.className += " responsive";
+            } else {
+                x.className = "topnav";
+            }
+        }
+</script>
+
+<style media="all">
+        body{
+            background-color: #ebebeb;
+        }
+        @media print {
+            
+            #tab4success:after {
+                /* common custom values */
+                
+                content: "© Company Name";
+                /* your site name */
+                
+                font-size: 620%;
+                /* font size */
+                
+                color: #d0d0d0;
+                opacity: 0.3;
+                /* alpha, could be even rgba(0,0,0,.05) */
+                
+                width: 100%;
+                /* rest of the logic */
+                
+                z-index: 9999;
+                cursor: default;
+                display: block;
+                position: fixed;
+                top: 40%;
+                right: 0;
+                bottom: 0;
+                left: 25%;
+                font-family: Monotype Corsiva;
+                font-weight: bold;
+                font-style: italic;
+                text-align: center;
+                line-height: 100%;
+                -webkit-transform: rotate(-45deg);
+                -moz-transform: rotate(-45deg);
+                -ms-transform: rotate(-45deg);
+                -o-transform: rotate(-45deg);
+                transform: rotate(-45deg);
+                -webkit-pointer-events: none;
+                -moz-pointer-events: none;
+                -ms-pointer-events: none;
+                -o-pointer-events: none;
+                pointer-events: none;
+                -webkit-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                -o-user-select: none;
+                user-select: none;
+            }
+            #paper {
+                margin-top: -150px;
+                /*position:absolute;
+				left:0px;
+				top:-40px;
+				padding:0px;
+				border:2px solid red;*/
+            }
+            .pgHeading {
+                visibility: hidden;
+            }
+            .panel {
+                border: none;
+            }
+        }
+        .panel-heading h3 {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: normal;
+            width: 75%;
+            padding-top: 8px;
+        }
+        /* CSS REQUIRED */
+        
+        .state-icon {
+            left: -5px;
+        }
+        .list-group-item-primary {
+            color: rgb(255, 255, 255);
+            background-color: rgb(66, 139, 202);
+        }
+        /* DEMO ONLY - REMOVES UNWANTED MARGIN */
+        
+        .well .list-group {
+            margin-bottom: 0px;
+        }
+        .borderless tbody tr td {
+            border: none;
+        }
+        .table .table {
+            background-color: transparent;
+            margin-bottom:0px;
+        }
+        .btn-default{
+            color: #333;
+            background-color: #d6e9c6;
+
+        }
+
+        .topnav {
+            overflow: hidden;
+            background-color: #d6e9c6;
+        }
+
+        .topnav a {
+            float: left;
+            display: block;
+            color: #000000;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            font-size: 17px;
+        }
+
+        .topnav a:hover {
+            background-color: #dff0d8;
+            color: black;
+        }
+
+        .topnav .icon {
+            display: none;
+        }
+
+        @media screen and (max-width: 600px) {
+            .topnav a:not(:first-child) {display: none;}
+            .topnav a.icon {
+            float: right;
+            display: block;
+            }
+        }
+
+        @media screen and (max-width: 600px) {
+            .topnav.responsive {position: relative;}
+            .topnav.responsive .icon {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+        .topnav.responsive a {
+            float: none;
+            display: block;
+            text-align: left;
+            }
+        }
+        footer{
+            display: table;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+            font-size:12px;
+        }
+        #languageNote{
+            display: table;
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+            font-size:12px;
+            line-height: 0;
+            color: #999;
+            font-family:normal;
+        }
+    </style>
+
+</head>
+
+<body>
+<div class="container">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel with-nav-tabs panel-success">
+                    <div class="panel-heading pgHeading">
+                        <div class="btn-group pull-right">
+                            <!--<button type="button" class="btn btn-info btn-xm">New Paper</button>
+                            <button type="button" class="btn btn-success btn-xm">Archive Paper</button>
+                            <button type="button" id="printpaper" onClick="print()" class="btn btn-success btn-xm">Print Paper</button>-->
+                        </div>
+                        <!--<ul class="nav nav-tabs">
+                            <li class="active"><a href="#tab1success" data-toggle="tab">Add Questions</a>
+                            </li>
+                            <li><a href="#tab2success" data-toggle="tab">Questions</a>
+                            </li>
+                            <li><a href="#tab3success" data-toggle="tab">Paper Info</a>
+                            </li>
+                            <li><a href="#tab4success" data-toggle="tab">Preview</a>
+                            </li>
+                        </ul>-->
+                        <div class="nav nav-tabs topnav" id="myTopnav">
+                            <a href="#tab1success" class="active" data-toggle="tab">Add Questions&nbsp;<i class="fa fa-plus" aria-hidden="true"></i></a>
+                            <a href="#tab2success" data-toggle="tab">Questions&nbsp;<i class="fa fa-list" aria-hidden="true"></i></a>
+                            <a href="#tab3success" data-toggle="tab">Paper Info&nbsp;<i class="fa fa-info" aria-hidden="true"></i></a>
+                            <a href="#tab4success" data-toggle="tab">Preview&nbsp;<i class="fa fa-picture-o" aria-hidden="true"></i></a>
+                            <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+                                <i class="fa fa-bars"></i>
+                            </a>
+                            <a href="#tab5success" data-toggle="tab">Settings&nbsp;<i class="fa fa-cog" aria-hidden="true"></i></i></a>
+                            <a href="#" class="pull-right" style="display:none" id="printpaper" onClick="print()">Print&nbsp;<i class="fa fa-print" aria-hidden="true"></i></a>
+
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="tab-content">
+                            <!-- Tab 1 Body -->
+                            <div class="tab-pane fade in active" id="tab1success">
+                                <label id="languageNote">Press ( Ctl+g ) for language change</label>
+                                <form id="addquestion">
+                                    <div class="row-fluid columns content">
+                                        <div class="form-group pull-right" style="width:100px">
+                                            <label for="mark">Mark:</label>
+                                            <input type="number" class="form-control" id="mark">
+                                        </div>
+                                        <a class="btn collapse-data-btn btn-default align-bottom" style="margin-top:25px;" data-toggle="collapse" href="#QOptions">Add Pairing Options&nbsp;<i class="fa fa-plus" aria-hidden="true"></i></a>
+                                    </div>
+                                    <textarea id="question" style="width:100%;height:100px"></textarea>
+                                    <div class="row collapse" id="QOptions">
+                                        <div class="col-sm-6">
+                                            <label>Left Options</label>
+                                            <textarea id="lqop1" style="width:100%;"></textarea>
+                                            <textarea id="lqop2" style="width:100%;"></textarea>
+                                            <textarea id="lqop3" style="width:100%;"></textarea>
+                                            <textarea id="lqop4" style="width:100%;"></textarea>
+                                            <textarea id="lqop5" style="width:100%;"></textarea>
+                                            <textarea id="lqop6" style="width:100%;"></textarea>
+                                            <textarea id="lqop7" style="width:100%;"></textarea>
+                                            <textarea id="lqop8" style="width:100%;"></textarea>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <label>Right Options</label>
+                                            <textarea id="rqop1" style="width:100%;"></textarea>
+                                            <textarea id="rqop2" style="width:100%;"></textarea>
+                                            <textarea id="rqop3" style="width:100%;"></textarea>
+                                            <textarea id="rqop4" style="width:100%;"></textarea>
+                                            <textarea id="rqop5" style="width:100%;"></textarea>
+                                            <textarea id="rqop6" style="width:100%;"></textarea>
+                                            <textarea id="rqop7" style="width:100%;"></textarea>
+                                            <textarea id="rqop8" style="width:100%;"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <table class="table borderless" style="border:none;">
+                                        <thead>
+                                        <tr>
+                                            <th>Option 1</th>
+                                            <th>Option 2</th>
+                                            <th>Option 3</th>
+                                            <th>Option 4</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr>
+                                            <td>
+                                                <textarea id="option1" style="width:100%;height:50px"></textarea>
+                                            </td>
+                                            <td>
+                                                <textarea id="option2" style="width:100%;height:50px"></textarea>
+                                            </td>
+                                            <td>
+                                                <textarea id="option3" style="width:100%;height:50px"></textarea>
+                                            </td>
+                                            <td>
+                                                <textarea id="option4" style="width:100%;height:50px"></textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <div class="form-group">
+                                                    <label for="answerindex">Select Subject:</label>
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-default dropdown-toggle" style="width:100%" id="paperSubjectBtn" type="button" data-toggle="dropdown">Select Subject<span class="caret"></span></button>
+                                                        <ul class="dropdown-menu" id="paperSubject" style="width:100%">
+                                                            <li><a href="Javascript:self">Science</a></li>
+                                                            <li><a href="Javascript:self">Economics</a></li>
+                                                            <li><a href="Javascript:self">History</a></li>
+                                                            <li><a href="Javascript:self">Other</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td colspan="2">
+                                                <div class="form-group">
+                                                    <label for="answerindex">Answer Index:</label>
+                                                    <input type="number" class="form-control" id="answerindex">
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                <div class="btn-group btn-group-justified">
+                                                    <a href="#" id="btnAdd" class="btn btn-default" onClick="insert()">Add</a>
+                                                    <a href="#" id="btnUpdate" class="btn btn-default">Update</a>
+                                                    <a href="#" id="btnClear"  class="btn btn-default" onClick="clearForm('addquestion')">Clear</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+
+
+                            <!-- Tab 2 Body -->
+                            <div class="tab-pane fade" id="tab2success">
+                                <div style="max-height: auto;overflow: auto;">
+                                    <ul id="check-list-box" class="list-group checked-list-box">
+                                        <li class="list-group-item">
+                                            <label class="pull-left">Cras justo odio</label>
+                                            <div class="btn-group pull-right" style="width:80px;background-color:red">
+                                                <button type="button" class="btn btn-primary btn-xs">Edit</button>
+                                                <button type="button" class="btn btn-primary btn-xs">Delete</button>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <!--<button class="btn btn-primary col-xs-12" id="get-checked-data" style="visibility:hidden">Add To Paper</button>
+                                <pre id="display-json" style="visibility:hidden"></pre> -->
+                            </div>
+
+
+                            <!-- Tab 3 Body -->
+                            <div class="tab-pane fade" id="tab3success">
+                                <form id="paperinfo">
+                                    <div class="form-group">
+                                        <label for="heading">Paper Heading:</label>
+                                        <input type="text" class="form-control" id="heading">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="subheading">Paper Sub Heading:</label>
+                                        <input type="text" class="form-control" id="subheading">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="date">Exam Date:</label>
+                                        <input type="text" value="02-16-2012" class="form-control" id="date">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="totalmark">Total Marks:</label>
+                                        <input type="number" class="form-control" id="totalmark">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="duration">Total Duration:</label>
+                                        <input type="text" class="form-control" id="duration">
+                                    </div>
+                                    <button type="button" class="btn btn-default" onClick="saveHeading()">Save</button>
+                                    <button type="button" class="btn btn-default" onClick="clearForm('paperinfo')">Clear</button>
+                                </form>
+                            </div>
+
+
+                            <!-- Tab 4 Body -->
+                            <div class="tab-pane fade" id="tab4success">
+                                <table id="paper" class="table table-condensed">
+                                    <tbody>
+                                    <tr>
+                                        <td width="80px" style="border-top:none;"><img src="https://myapplicationstudio22.firebaseapp.com/images/ic_launcher.png" height="80px" width="80px" />
+                                        </td>
+                                        <td align="middle" style="border-top:none;">
+                                            <font size="4" color="black" id="pHeading">Heading</font>
+                                            <br>
+                                            <font size="3" color="black" id="pSubHeading">SubHeading</font>
+                                        </td>
+                                        <td width="80px" style="border-top:none;">&nbsp;</td>
+                                    </tr>
+                                    <tr>
+                                        <td align="left"><b><label id="pDate">Date : 14 August 2016</label></br><label id="pTime">Time : 1h</label></b>
+                                        </td>
+                                        <td width="80px">&nbsp;</td>
+                                        <td align="right"><b><label id="pQuestions">Total Questions : 100</label></br><label id="pMarks">Total Marks : 100</label></b>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="3">
+                                            <div id="tblContent">
+                                                <table class="table borderless">
+                                                    <tbody>
+                                                    <tr>
+                                                        <td align="left" colspan="2"><b>1. What is your question?</b></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="left" width="50%">1. OptionA</td>
+                                                        <td align="left" width="50%">2. OptionB</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="left" width="50%">3. OptionC</td>
+                                                        <td align="left" width="50%">4. OptionD</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Tab 5 Body -->
+                            <div class="tab-pane fade" id="tab5success">
+                                <ul class="list-group">
+                                    <li class="list-group-item">
+                                        <label>Clear Database</label>
+                                        <button type="button" onClick="clearDataBase()" style="width:100px;" class="btn btn-default btn-xs pull-right">Clear&nbsp;<i class="fa fa-trash" aria-hidden="true"></i></button>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <label>Export Database</label>
+                                        <button type="button" onClick="exportDataBase()" style="width:100px;" class="btn btn-default btn-xs pull-right">Export&nbsp; <i class="fa fa-download" aria-hidden="true"></i></button>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <label>Import Database</label>
+                                        <!--<button type="button" onClick="importDataBase()" style="width:100px;" >Import</button>-->
+                                        <input type="file" id="files" accept="text/json" onChange="importDataBase(event)" name="files" class="btn btn-default btn-xs pull-right" />
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <footer>© 2018 Concept Apps</footer>
+            </div>
+        </div>
+    </div>
+
+    <!----modal starts here--->
+    <div id="deleteModal" class="modal fade" role='dialog'>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title">Delete </h4>
+                </div>
+                <div class="modal-body">
+                    <p>Do You Really Want to Delete This ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <span id= 'deleteButton'></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>
