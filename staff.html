@@ -254,14 +254,19 @@
     </style>
     <script>
 
-        $(document).ready(function(){
-            $.getJSON( "https://firebasestorage.googleapis.com/v0/b/myapplicationstudio22.appspot.com/o/profile.json?alt=media")
-              .done(function( json ) {
-                loadProfileData(json);
-              })
-              .fail(function( jqxhr, textStatus, error ) {
-                var err = textStatus + ", " + error;
-                console.log( "Request Failed: " + err );
+       $(document).ready(function(){
+            var request = $.ajax({
+              url: "https://firebasestorage.googleapis.com/v0/b/myapplicationstudio22.appspot.com/o/profile.json?alt=media",
+              method: "GET",
+              dataType: "json"
+            });
+
+            request.done(function( msg ) {
+                loadProfileData(msg)
+            });
+
+            request.fail(function( jqXHR, textStatus ) {
+                alert( "Request failed: " + textStatus );
             });
         });
 
