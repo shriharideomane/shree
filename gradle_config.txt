@@ -1,0 +1,4 @@
+// GET GITHUB latest revision number
+def getVersionName = { ->
+    return "git rev-parse --short HEAD".execute().text.trim()
+}
