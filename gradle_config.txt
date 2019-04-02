@@ -2,3 +2,90 @@
 def getVersionName = { ->
     return "git rev-parse --short HEAD".execute().text.trim()
 }
+// Add Variable to buildConfigField
+buildConfigField "String", "GOOGLE_ANALYTICS_TRACKING_ID", "00000000"
+
+// Add source set 
+sourceSets {
+    prod {
+        java.srcDirs = ['src/main/java', 'src/prod/java']
+        assets.srcDirs = ['src/main/assets', 'src/prod/assets']
+    }
+
+    qa {
+        java.srcDirs = ['src/main/java', 'src/qa/java']
+        assets.srcDirs = ['src/main/assets', 'src/debug/assets']
+    }
+}
+// Date format functions
+static def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
+static def releaseDate() {
+    return new Date().format("MMMM dd, yyyy", TimeZone.getTimeZone("UTC"))
+}
+
+// Get Current Build Type
+def getCurrentBuildType() {
+    Gradle gradle = getGradle()
+    String tskReqStr = gradle.getStartParameter().getTaskRequests().toString()
+    if (tskReqStr.contains("Release")) {
+        return "release"
+    } else if (tskReqStr.contains("Debug")) {
+        return "debug"
+    }
+    return "debug";
+}
+
+// Get Current Product Flavor Type
+def getCurrentFlavor() {
+    Gradle gradle = getGradle()
+    String tskReqStr = gradle.getStartParameter().getTaskRequests().toString()
+
+    Pattern pattern;
+
+    if (tskReqStr.contains("assemble"))
+        pattern = Pattern.compile("assemble(\\w+)(Release|Debug)")
+    else
+        pattern = Pattern.compile("generate(\\w+)(Release|Debug)")
+
+    Matcher matcher = pattern.matcher(tskReqStr)
+
+    if (matcher.find()) {
+        println matcher.group(1).toLowerCase()
+        return matcher.group(1).toLowerCase()
+    } else {
+        return "NO MATCH FOUND";
+    }
+}
+
+// Update property value in file
+def updatePropertyConfig(){
+    Properties var = new Properties()
+    File file = file("src/main/assets/abc.properties");
+    var.load(file.newDataInputStream())
+    var.put("isProduction", getCurrentBuildType().equals("release") ? "true" : "false")
+    var.store(file.newWriter(), "Value Updated")
+    var.clone()
+}
+
+// Copy tack
+task(switchToRelease) {
+    copy {
+        from 'src/'+getCurrentBuildType()+'/google-services.json'
+        into '.'
+    }
+}
+check.dependsOn(switchToRelease)
+
+// Rename APK
+android.applicationVariants.all { variant ->
+    variant.outputs.all { output ->
+        def outputFile = output.outputFile
+        if (outputFile != null && outputFile.name.endsWith('.apk')) {
+            def fileName = outputFile.name.replace("app", appName + "_${defaultConfig.versionName}_${releaseTime()}")
+            outputFileName = fileName
+        }
+    }
+}
