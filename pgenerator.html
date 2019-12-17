@@ -3,8 +3,10 @@
 
 <head>
     <title>Paper Generator</title>
-    <meta charset="utf-8">
-
+	
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <script type="text/javascript" src="https://www.google.com/jsapi">
+	    
     <!-- Chrome, Firefox OS and Opera -->
     <meta name="theme-color" content="#d6e9c6">
     <!-- Windows Phone -->
@@ -25,29 +27,27 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <script type="text/javascript" src="https://www.google.com/jsapi">
+    
 </head>
 
 <script type="text/javascript">
         // Load the Google Transliterate API
-        google.load("elements", "1", {
+          google.load("elements", "1", {
             packages: "transliteration"
-        });
-
+          });
+	
         function onLoad() {
             var options = {
-                sourceLanguage: google.elements.transliteration.LanguageCode.ENGLISH,
-                destinationLanguage: [google.elements.transliteration.LanguageCode.HINDI],
-                shortcutKey: 'ctrl+g',
-                transliterationEnabled: true
-            };
-
+            sourceLanguage:google.elements.transliteration.LanguageCode.ENGLISH,
+            destinationLanguage:[google.elements.transliteration.LanguageCode.HINDI],
+            shortcutKey: 'ctrl+g',
+            transliterationEnabled: true
+        };
             // Create an instance on TransliterationControl with the required options.
             var control = new google.elements.transliteration.TransliterationControl(options);
 
             // Enable transliteration in the textbox with id 'transliterateTextarea'.
-            control.makeTransliteratable(['question', 'option1', 'option2', 'option3', 'option4', 'heading', 'subheading', 'duration', lqop1, lqop2, lqop3, lqop4, lqop5, lqop6, lqop7, lqop8, rqop1, rqop2, rqop3, rqop4, rqop5, rqop6, rqop7, rqop8]);
+            control.makeTransliteratable(['question', 'option1', 'option2', 'option3', 'option4', 'heading', 'subheading', 'duration', 'lqop1', 'lqop2', 'lqop3', 'lqop4', 'lqop5', 'lqop6', 'lqop7', 'lqop8', 'rqop1', 'rqop2', 'rqop3', 'rqop4', 'rqop5', 'rqop6', 'rqop7', 'rqop8']);
         }
         google.setOnLoadCallback(onLoad); 
 	
