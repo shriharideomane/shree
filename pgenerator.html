@@ -32,23 +32,30 @@
 
 <script type="text/javascript">
         // Load the Google Transliterate API
-          google.load("elements", "1", {
+	google.load("elements", "1", {
             packages: "transliteration"
           });
-	
-        function onLoad() {
-            var options = {
-            sourceLanguage:google.elements.transliteration.LanguageCode.ENGLISH,
-            destinationLanguage:[google.elements.transliteration.LanguageCode.HINDI],
+
+      function onLoad() {
+        var options = {
+            sourceLanguage:
+                google.elements.transliteration.LanguageCode.ENGLISH,
+            destinationLanguage:
+                [google.elements.transliteration.LanguageCode.HINDI],
             shortcutKey: 'ctrl+g',
             transliterationEnabled: true
         };
-            // Create an instance on TransliterationControl with the required options.
-            var control = new google.elements.transliteration.TransliterationControl(options);
 
-            // Enable transliteration in the textbox with id 'transliterateTextarea'.
+        // Create an instance on TransliterationControl with the required
+        // options.
+        var control =
+            new google.elements.transliteration.TransliterationControl(options);
+
+        // Enable transliteration in the textbox with id
+        // 'transliterateTextarea'.
             control.makeTransliteratable(['question', 'option1', 'option2', 'option3', 'option4', 'heading', 'subheading', 'duration', 'lqop1', 'lqop2', 'lqop3', 'lqop4', 'lqop5', 'lqop6', 'lqop7', 'lqop8', 'rqop1', 'rqop2', 'rqop3', 'rqop4', 'rqop5', 'rqop6', 'rqop7', 'rqop8']);
-        }
+      }
+	
         google.setOnLoadCallback(onLoad); 
 	
 </script>
