@@ -20,8 +20,7 @@
         "question": "First Question ",
         "questionIndex": "1",
         "questionSubject": "MATH",
-        "questionType": "single",
-        "userAnswerIndex": []
+        "questionType": "single"
       }
     ],
     "subTitle": "ok",
