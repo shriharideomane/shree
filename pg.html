@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<!-- saved from url=(0056)https://shriharideomane.github.io/shree/pg.html# -->
 <html lang="en">
+
 <head>
-    <title>Paper Generator</title>
+    <title>RCA</title>
 
     <!-- Chrome, Firefox OS and Opera -->
     <meta name="theme-color" content="#d6e9c6"/>
@@ -28,7 +28,9 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
 
-    <script type="text/javascript">
+</head>
+
+<script type="text/javascript">
         // Load the Google Transliterate API
 	google.load("elements", "1", {
             packages: "transliteration"
@@ -53,14 +55,12 @@
         // 'transliterateTextarea'.
             control.makeTransliteratable(['question', 'option1', 'option2', 'option3', 'option4', 'heading', 'subheading', 'duration', 'lqop1', 'lqop2', 'lqop3', 'lqop4', 'lqop5', 'lqop6', 'lqop7', 'lqop8', 'rqop1', 'rqop2', 'rqop3', 'rqop4', 'rqop5', 'rqop6', 'rqop7', 'rqop8']);
       }
-	
-       // google.setOnLoadCallback(onLoad); 
-	
 
+       // google.setOnLoadCallback(onLoad);
 
+</script>
 
-    </script>
-    <script>
+<script>
         $(function() {
 
 			$("#btnUpdate").hide();
@@ -69,25 +69,12 @@
             function print() {
                 window.print();
             };
- 
-            // OnLoad set questionType spinner listener
-            $("#questionType").on('click', 'li a', function() {
-                $('#questionTypeBtn').text($(this).text());
-                $('#questionTypeBtn').val($(this).text());
-                if($(this).text() == "PAIR"){
-                    $('#QOptions').collapse('show');
-                }else{
-                    $('#QOptions').collapse('hide');
-                }
 
+            // OnLoad set spinner listener
+            $("#paperSubject").on('click', 'li a', function() {
+                $('#paperSubjectBtn').text($(this).text());
+                $('#paperSubjectBtn').val($(this).text());
             });
-
-            // OnLoad set questionSubject spinner listener
-            $("#questionSubject").on('click', 'li a', function() {
-                $('#questionSubjectBtn').text($(this).text());
-                $('#questionSubjectBtn').val($(this).text());
-            });
-
             // Tab Navigation
             $('.nav-tabs a').click(function(e) {
                 var target = $(e.target).attr("href");
@@ -105,8 +92,8 @@
                     //loadSettings
                 }
             });
- 
-			$("#btnUpdate").on('click',function() { 
+
+			$("#btnUpdate").on('click',function() {
 				update();
 			});
 
@@ -222,7 +209,7 @@
 					alert("Error:" + error.message);
 				});
             });
-			
+
         }
 
         function update() {
@@ -248,9 +235,9 @@
 				+$("#rqop7").val()+'", "'
 				+$("#rqop8").val()+'"]}';
 			}
-			
+
 			var rowid = $("#btnUpdate").val();
-            var subject = $("#questionTypeBtn").val();
+            var subject = $("#paperSubjectBtn").val();
             var question = $("#question").val();
             var option1 = $("#option1").val();
             var option2 = $("#option2").val();
@@ -279,12 +266,12 @@
             }else{
                 alert("Answer index can't be 0 or blank");
             }
-			
+
         }
 
         function insert() {
 
-            var subject = $("#questionTypeBtn").val();
+            var subject = $("#paperSubjectBtn").val();
 			var type = $('#QOptions').hasClass('in');
 			var qOptions = "";
 			if(type){
@@ -306,7 +293,7 @@
 				+$("#rqop7").val()+'", "'
 				+$("#rqop8").val()+'"]}';
 			}
-			
+
             var question = $("#question").val();
             var option1 = $("#option1").val();
             var option2 = $("#option2").val();
@@ -333,7 +320,7 @@
                 alert("Answer index can't be 0 or blank");
             }
         }
- 
+
 
         function saveHeading() {
 
@@ -375,13 +362,13 @@
 						list += '<button type="button" data-animal-type=\''+results.rows.item(i).rowid+'\' onClick="confirmDelete(this)" class="btn btn-default btn-xs">Delete</button>';
 						list += '</div>';
 						list += '</li>';
- 
+
                     }
                     $("#check-list-box").html(list);
-					
+
 					//Enable When u want multiple check function
                     //setListListnear();
-					
+
                 }, null);
             });
         }
@@ -500,10 +487,10 @@
 			var removeObjectQuote = replaceSlash.replace('":"{', '":{').replace(']}"', ']}').replace(/[\u0000-\u0019]+/g,"");
 			console.log(removeObjectQuote);
 			var obj = JSON.parse(removeObjectQuote);
-			
+
 			activeTab("tab1success");
 				if(obj.type){
-				
+
 					var objQOptions = obj.qoptions;
 					if(objQOptions !== "undefined" && objQOptions != ""){
 						$(".collapse").collapse('show');
@@ -532,8 +519,8 @@
 				$("#btnUpdate").show();
 				$("#btnUpdate").val(obj.rowid);
 				$("#btnAdd").hide();
-				$('#questionTypeBtn').text(obj.subject);
-				$('#questionTypeBtn').val(obj.subject);
+				$('#paperSubjectBtn').text(obj.subject);
+				$('#paperSubjectBtn').val(obj.subject);
 				$("#question").text(obj.question);
 				$("#option1").text(obj.option1);
 				$("#option2").text(obj.option2);
@@ -545,7 +532,7 @@
 		function confirmDeleteModal(id){
 			$('#deleteModal').modal();
 			$('#deleteButton').html('<a class="btn btn-danger" onclick="deleteData('+id+')">Delete</a>');
-		}     
+		}
 		function deleteData(id){
 			// do your stuffs with id
 			deleteQ(id);
@@ -610,9 +597,9 @@
                         $("#pHeading").html(results.rows.item(i).heading);
                         $("#pSubHeading").html(results.rows.item(i).subheading);
                         $("#pDate").html("Date : " + results.rows.item(i).date);
-                        $("#pMarks").html("Total Marks : " + results.rows.item(i).totalmark);
-                        $("#pQuestions").html("Total Questions : " + tQ);
-                        $("#pTime").html("Time : " + results.rows.item(i).duration);
+                        $("#pMarks").html(results.rows.item(i).totalmark);
+                        $("#pQuestions").html(tQ);
+                        $("#pTime").html(results.rows.item(i).duration);
                     }
                 }, null);
             });
@@ -625,16 +612,14 @@
                 x.className = "topnav";
             }
         }
+</script>
 
-
-
-    </script>
-    <style media="all">
-        body{
-            background-color: #ebebeb;
-
+<style media="all">
+        * {
+            font-family: Arial, Helvetica, sans-serif;
         }
-        .container{
+
+	    .container{
             padding-left: 0px;
             padding-right: 0px;
         }
@@ -643,44 +628,27 @@
           display: flex;
         }
 
-
-
         @media print {
-            
+
             #tab4success:after {
-                /* common custom values */
-                
-                content: "© Rajmarg Competitive Academy";
-                /* your site name */
-                
-                font-size: 220%;
-                /* font size */
-                
-                color: #d0d0d0;
-                opacity: 0.3;
-                /* alpha, could be even rgba(0,0,0,.05) */
-                
-                width: 100%;
+
+                content: url("IMG_20201106_224049.jpg"); background-position: center;
+                opacity: 0.1;
+
                 /* rest of the logic */
-                
+
                 z-index: 9999;
                 cursor: default;
                 display: block;
                 position: fixed;
-                top: 40%;
+                top: 30%;
                 right: 0;
                 bottom: 0;
-                left: 25%;
+                left: 0;
                 font-family: Monotype Corsiva;
-                font-weight: bold;
+                font-weight: normal;
                 font-style: italic;
                 text-align: center;
-                line-height: 100%;
-                -webkit-transform: rotate(-45deg);
-                -moz-transform: rotate(-45deg);
-                -ms-transform: rotate(-45deg);
-                -o-transform: rotate(-45deg);
-                transform: rotate(-45deg);
                 -webkit-pointer-events: none;
                 -moz-pointer-events: none;
                 -ms-pointer-events: none;
@@ -692,6 +660,9 @@
                 -o-user-select: none;
                 user-select: none;
             }
+
+	    a[href]:after { content: none !important; }
+
             #paper {
                 margin-top: -130px;
                 /*position:absolute;
@@ -716,7 +687,7 @@
             padding-top: 8px;
         }
         /* CSS REQUIRED */
-        
+
         .state-icon {
             left: -5px;
         }
@@ -725,7 +696,7 @@
             background-color: rgb(66, 139, 202);
         }
         /* DEMO ONLY - REMOVES UNWANTED MARGIN */
-        
+
         .well .list-group {
             margin-bottom: 0px;
         }
@@ -807,9 +778,31 @@
 
 
 
+        table.roundedCorners {
+            width : 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-weight: bold;
+        }
+        table.roundedCorners, roundedCorners.td {
+            border: 2px solid black;
+            border-radius: 15px;
+            -moz-border-radius: 15px;
+        }
+
+        table.testID{
+            border: 1px solid black;
+            width: 250px;
+        }
+
+    </style>
+    <style media="print">
+	       @page {
+              margin: 2mm
+            }
+
     </style>
 </head>
-
 
 <body>
 <div class="container">
@@ -819,22 +812,15 @@
                 <div class="panel with-nav-tabs panel-success">
                     <div class="panel-heading pgHeading">
                         <div class="nav nav-tabs topnav" id="myTopnav">
-                            <a href="https://shriharideomane.github.io/shree/pg.html#tab1success" class="active"
-                               data-toggle="tab">Add Questions&nbsp;<i class="fa fa-plus" aria-hidden="true"></i></a>
-                            <a href="https://shriharideomane.github.io/shree/pg.html#tab2success"
-                               data-toggle="tab">Questions&nbsp;<i class="fa fa-list" aria-hidden="true"></i></a>
-                            <a href="https://shriharideomane.github.io/shree/pg.html#tab3success"
-                               data-toggle="tab">Paper Info&nbsp;<i class="fa fa-info" aria-hidden="true"></i></a>
-                            <a href="https://shriharideomane.github.io/shree/pg.html#tab4success"
-                               data-toggle="tab">Preview&nbsp;<i class="fa fa-picture-o" aria-hidden="true"></i></a>
+                            <a href="#tab1success" class="active" data-toggle="tab">Add Questions&nbsp;<i class="fa fa-plus" aria-hidden="true"></i></a>
+                            <a href="#tab2success" data-toggle="tab">Questions&nbsp;<i class="fa fa-list" aria-hidden="true"></i></a>
+                            <a href="#tab3success" data-toggle="tab">Paper Info&nbsp;<i class="fa fa-info" aria-hidden="true"></i></a>
+                            <a href="#tab4success" data-toggle="tab">Preview&nbsp;<i class="fa fa-picture-o" aria-hidden="true"></i></a>
                             <a href="javascript:void(0);" class="icon" onclick="myFunction()">
                                 <i class="fa fa-bars"></i>
                             </a>
-                            <a href="https://shriharideomane.github.io/shree/pg.html#tab5success"
-                               data-toggle="tab">Settings&nbsp;<i class="fa fa-cog" aria-hidden="true"></i></a>
-                            <a href="https://shriharideomane.github.io/shree/pg.html#" class="pull-right"
-                               style="display:none" id="printpaper" onclick="print()">Print&nbsp;<i class="fa fa-print"
-                                                                                                    aria-hidden="true"></i></a>
+                            <a href="#tab5success" data-toggle="tab">Settings&nbsp;<i class="fa fa-cog" aria-hidden="true"></i></i></a>
+                            <a href="#" class="pull-right" style="display:none" id="printpaper" onClick="print()">Print&nbsp;<i class="fa fa-print" aria-hidden="true"></i></a>
 
                         </div>
                     </div>
@@ -844,47 +830,15 @@
                             <div class="tab-pane fade in active" id="tab1success">
                                 <label id="languageNote">Press ( Ctl+g ) for language change</label>
                                 <form id="addquestion">
-                                    <div class="row" aria-expanded="false" style="padding:0px 12px 0px 12px">
-                                        <!--<label for="questionType">Select Question Type:</label>
-                                        <div class="btn-group special">
-                                            <button type="button" class="btn btn-primary btn-sm btn-block">SINGLE</button>
-                                            <button type="button" class="btn btn-primary btn-sm">MULTIPLE</button>
-                                            <button type="button" class="btn btn-primary btn-sm btn-block">PAIR</button>
-                                        </div>-->
-                                        <div class="form-group">
-                                            <label for="questionType">Select Question Type:</label>
-                                            <div class="dropdown">
-                                                <button class="btn btn-default dropdown-toggle" style="width:100%"
-                                                        id="questionTypeBtn" type="button" data-toggle="dropdown">Select
-                                                    Type<span class="caret"></span></button>
-                                                <ul class="dropdown-menu" id="questionType" style="width:100%">
-                                                    <li><a href="Javascript:self">SINGLE</a></li>
-                                                    <li><a href="Javascript:self">MULTIPLE</a></li>
-                                                    <li><a href="Javascript:self">PAIR</a></li>
-                                                </ul>
-                                            </div>
+                                    <div class="row-fluid columns content">
+                                        <div class="form-group pull-right" style="width:100px">
+                                            <label for="mark">Mark:</label>
+                                            <input type="number" class="form-control" id="mark">
                                         </div>
-                                        <div class="form-group">
-                                            <label for="questionSubject">Select Subject:</label>
-                                            <div class="dropdown">
-                                                <button class="btn btn-default dropdown-toggle" style="width:100%"
-                                                        id="questionSubjectBtn" type="button" data-toggle="dropdown">
-                                                    Select Type<span class="caret"></span></button>
-                                                <ul class="dropdown-menu" id="questionSubject" style="width:100%">
-                                                    <li><a href="Javascript:self">GENERAL</a></li>
-                                                    <li><a href="Javascript:self">HISTORY</a></li>
-                                                    <li><a href="Javascript:self">SCIENCE</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <!--<a class="btn collapse-data-btn btn-default align-bottom collapsed"
-                                           style="margin-top:25px;" data-toggle="collapse"
-                                           href="https://shriharideomane.github.io/shree/pg.html#QOptions"
-                                           aria-expanded="false">Add Pairing Options&nbsp;<i class="fa fa-plus"
-                                                                                             aria-hidden="true"></i></a>-->
+                                        <a class="btn collapse-data-btn btn-default align-bottom" style="margin-top:25px;" data-toggle="collapse" href="#QOptions">Add Pairing Options&nbsp;<i class="fa fa-plus" aria-hidden="true"></i></a>
                                     </div>
                                     <textarea id="question" style="width:100%;height:100px"></textarea>
-                                    <div class="row collapse" id="QOptions" aria-expanded="false">
+                                    <div class="row collapse" id="QOptions">
                                         <div class="col-sm-6">
                                             <label>Left Options</label>
                                             <textarea id="lqop1" style="width:100%;"></textarea>
@@ -909,9 +863,9 @@
                                         </div>
                                     </div>
 
-                                    <table class="table borderless" style="border:1px sold red;">
+                                    <table class="table borderless" style="border:none;">
                                         <tr>
-                                            <td>
+                                            <td colspan="4">
                                                 <div class="row" aria-expanded="false">
                                                     <div class="form-group" style="padding:0px 12px 0px 12px">
                                                         <label for="option1">Option 1</label>
@@ -936,30 +890,34 @@
                                                 </div>
                                             </td>
                                         </tr>
+
                                         <tr>
-                                            <td>
-                                                <div class="row" aria-expanded="false">
-                                                    <div class="form-group col-sm-6">
-                                                        <label for="mark">Mark:</label>
-                                                        <input type="number" class="form-control" id="mark">
+                                            <td colspan="2">
+                                                <div class="form-group">
+                                                    <label for="answerindex">Question Type:</label>
+                                                    <div class="dropdown">
+                                                        <button class="btn btn-default dropdown-toggle" style="width:100%" id="paperSubjectBtn" type="button" data-toggle="dropdown">Select Type<span class="caret"></span></button>
+                                                        <ul class="dropdown-menu" id="paperSubject" style="width:100%">
+                                                            <li><a href="Javascript:self">SINGLE</a></li>
+                                                            <li><a href="Javascript:self">MULTIPLE</a></li>
+                                                            <li><a href="Javascript:self">PAIR</a></li>
+                                                        </ul>
                                                     </div>
-                                                    <div class="form-group col-sm-6">
-                                                        <label for="answerindex">Answer Index:</label>
-                                                        <input type="number" class="form-control" id="answerindex">
-                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td colspan="2">
+                                                <div class="form-group">
+                                                    <label for="answerindex">Answer Index:</label>
+                                                    <input type="number" class="form-control" id="answerindex">
                                                 </div>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td>
+                                            <td colspan="4">
                                                 <div class="btn-group btn-group-justified">
-                                                    <a href="https://shriharideomane.github.io/shree/pg.html#"
-                                                       id="btnAdd" class="btn btn-default" onclick="insert()">Add</a>
-                                                    <a href="https://shriharideomane.github.io/shree/pg.html#"
-                                                       id="btnUpdate" class="btn btn-default" style="display: none;">Update</a>
-                                                    <a href="https://shriharideomane.github.io/shree/pg.html#"
-                                                       id="btnClear" class="btn btn-default"
-                                                       onclick="clearForm(&#39;addquestion&#39;)">Clear</a>
+                                                    <a href="#" id="btnAdd" class="btn btn-default" onClick="insert()">Add</a>
+                                                    <a href="#" id="btnUpdate" class="btn btn-default">Update</a>
+                                                    <a href="#" id="btnClear"  class="btn btn-default" onClick="clearForm('addquestion')">Clear</a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -1010,10 +968,8 @@
                                         <label for="duration">Total Duration:</label>
                                         <input type="text" class="form-control" id="duration">
                                     </div>
-                                    <button type="button" class="btn btn-default" onclick="saveHeading()">Save</button>
-                                    <button type="button" class="btn btn-default"
-                                            onclick="clearForm(&#39;paperinfo&#39;)">Clear
-                                    </button>
+                                    <button type="button" class="btn btn-default" onClick="saveHeading()">Save</button>
+                                    <button type="button" class="btn btn-default" onClick="clearForm('paperinfo')">Clear</button>
                                 </form>
                             </div>
 
@@ -1022,9 +978,8 @@
                             <div class="tab-pane fade" id="tab4success">
                                 <table id="paper" class="table table-condensed">
                                     <tbody>
-                                    <tr>
-                                        <td width="80px" style="border-top:none;"><img
-                                                src="./PaperGenerator_files/rca_logo.png" height="80px" width="80px">
+                                    <!--<tr>
+                                        <td width="80px" style="border-top:none;"><img src="rca_logo.png" height="80px" width="80px" />
                                         </td>
                                         <td align="middle" style="border-top:none;">
                                             <font size="4" color="black" id="pHeading">Heading</font>
@@ -1034,12 +989,87 @@
                                         <td width="80px" style="border-top:none;">&nbsp;</td>
                                     </tr>
                                     <tr>
-                                        <td align="left"><b><label id="pDate">Date : 14 August 2016</label><br><label
-                                                id="pTime">Time : 1h</label></b>
+                                        <td align="left"><b><label id="pDate">Date : 14 August 2016</label></br><label id="pTime">Time : 1h</label></b>
                                         </td>
                                         <td width="80px">&nbsp;</td>
-                                        <td align="right"><b><label id="pQuestions">Total Questions :
-                                            100</label><br><label id="pMarks">Total Marks : 100</label></b>
+                                        <td align="right"><b><label id="pQuestions">Total Questions : 100</label></br><label id="pMarks">Total Marks : 100</label></b>
+                                        </td>
+                                    </tr>-->
+                                    <tr>
+                                        <td colspan="3">
+                                            <table class="roundedCorners">
+                                                <tr>
+                                                    <td style="padding-left:30px; padding-right:30px; border-bottom: solid 3px #000;" align="center"><img width="200px" src="img.png"></td>
+                                                    <td colspan="2"
+                                                        style="padding:30px; font-size:45px;text-align:center;border-bottom: solid 3px #000;"
+                                                        align="center"><label id="pHeading">Heading</label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td bgcolor="#FFCC00" colspan="3" style="padding-left:30px; padding-right:30px; border-bottom: solid 3px #000;">
+                                                        <table width="100%">
+                                                            <tr>
+                                                                <td><h4>वेळ : <label id="pTime">1</label> तास</h4></td>
+                                                                <td style="font-size:25px;font-weight: bold;" align="center"><label id="pSubHeading">Sub Heading</label></td>
+                                                                <td align="right"><h4>एकूण प्रश्न : 100</h4></td>
+                                                            </tr>
+                                                        </table>
+                                                        <table width="100%">
+                                                            <tr>
+                                                                <td>
+                                                                    <h4>
+                                                                        <table class="testID">
+                                                                            <tr>
+                                                                                <td align="center" style="border-left: solid 1px #000; padding:5px;">परीक्षा क्र.</td>
+                                                                                <td align="center" style="border-left: solid 1px #000; padding:5px;">1</td>
+                                                                                <td align="center" style="border-left: solid 1px #000; padding:5px;">0</td>
+                                                                                <td align="center" style="border-left: solid 1px #000; padding:5px;">0</td>
+                                                                                <td align="center" style="border-left: solid 1px #000; padding:5px;">0</td>
+                                                                                <td align="center" style="border-left: solid 1px #000; padding:5px;">0</td>
+                                                                                <td align="center" style="border-left: solid 1px #000; padding:5px;">0</td>
+                                                                                <td align="center" style="border-left: solid 1px #000; padding:5px;">1</td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </h4>
+                                                                </td>
+                                                                <td align="center"><h4>चाचणी क्रमांक 03</h4></td>
+                                                                <td align="right"><h4>एकूण गुण : <label id="pMarks">100</label></h4></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3" align="center" style="padding-left:30px; padding-right:30px"><h4>आपला निकाल;
+                                                        व्यवस्थितपणे येण्यासाठी आपल्याला दिलेल्या आपला निकाल
+                                                        व्यवस्थितपणे येण्यासाठी आपल्याला दिलेल्या आपला निकाल
+                                                        व्यवस्थितपणे येण्यासाठी आपल्याला दिलेल्या आपला निकाल
+                                                        व्यवस्थितपणे येण्यासाठी आपल्याला दिलेल्याl</h4></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3" style="padding-left:30px" align="left">Sample Image</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3" style="padding-left:30px; padding-bottom:10px; padding-right:30px;border-bottom: solid 3px #000;" align="center"><img
+                                                            src="sampleImage.png" width="100%"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="3" align="left">
+                                                        <h6>
+                                                        <label style="padding-left:30px;padding-top:10px;padding-bottom:10px;">: सूचना : </label>
+                                                        </br>
+                                                        <ul style="line-height:150%" aria-label="left">
+                                                            <li>सदर प्रश्नपत्रिकेत 100 अनिवार्य प्रश्न आहेत उमेदवारांनी प्रश्नांची उत्तरे लिहिण्यास सुरुवात करण्यापूर्वी या प्रश्न मालिकेत सर्व प्रश्न आहेत किंवा नाहीत याची खात्री करून घ्यावी. तसेच अन्य काही दोष आढळल्यास ही प्रश्नपत्रिका समीक्षकांकडून लगेच तपासून घ्यावी.</li>
+                                                            <li>आपला परीक्षा क्रमांक या चौकोनात न विसरता लिहावा</li>
+                                                            <li>वर छापलेल्या प्रश्नपत्रिका क्रमांक तुमच्या उत्तरपत्रिकेवर विशिष्ट जागी उत्तर पत्रिकेवरील सूचनेप्रमाणे न विसरता नमूद करावा.</li>
+                                                            <li>या प्रश्नपत्रिकेतील प्रत्येक प्रश्नाला चार पर्याय उत्तरे दिली असून त्यांना 1, 2, 3 आणि 4 असे क्रमांक दिलेले आहेत. त्या चार उत्तर पैकी सर्वात योग्य उत्तराच्या क्रमांक उत्तर पत्रिकेवरील सूचनेप्रमाणे तुमच्या उत्तरपत्रिकेवर नमूद करावा अशाप्रकारे उत्तर पत्रिकेवर उत्तर क्रमांक नमूद करताना तो संबंधित प्रश्न क्रमांक समोर छायांकित करुन दर्शविला जाईल याची काळजी घ्यावी याकरिता फक्त काळ या शाळेचा बॉलपेन वापरावे पेन्सिल वा शाईचे पेन वापरू नये.</li>
+                                                            <li>सर्व प्रश्नांना समान गुड आहेत यास्तव सर्व प्रश्नांची उत्तरे द्यावीत काही मुळी चूक होणार नाही याची दक्षता घेऊनच शक्य तितक्या वेगाने प्रश्न सोडवावेत. क्रमाणे प्रश्न सोडवणे श्रेयस्कर आहे पण एखादा प्रश्न कठीण वाटल्यास त्यावर वेळ न घालविता पुढील प्रश्नाकडे वळावे. अशाप्रकारे शेवटचा प्रश्न पर्यंत पोहोचल्या नंतर वेळ शिल्लक राहिल्यास कठीण म्हणून वगळलेल्या प्रश्नाकडे परत नाही सोयीस्कर ठरेल.</li>
+                                                            <li>उत्तर प्रतीके एखादं नमूद केलेले उत्तर सोडवता येणार नाही. नमूद केलेले उत्तर सोडून नव्याने उत्तर दिल्यास ते तपासले जाणार नाही.</li>
+                                                            <li>सदर प्रश्नपत्रिकेत 100 अनिवार्य प्रश्न आहेत उमेदवारांनी प्रश्नांची उत्तरे लिहिण्यास सुरुवात करण्यापूर्वी या प्रश्न मालिकेत सर्व प्रश्न आहेत किंवा नाहीत याची खात्री करून घ्यावी. तसेच अन्य काही दोष आढळल्यास ही प्रश्नपत्रिका समीक्षकांकडून लगेच तपासून घ्यावी.</li>
+                                                        </ul>
+                                                            </h6>
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </td>
                                     </tr>
                                     <tr>
@@ -1048,8 +1078,7 @@
                                                 <table class="table borderless">
                                                     <tbody>
                                                     <tr>
-                                                        <td align="left" colspan="2"><b>1. What is your question?</b>
-                                                        </td>
+                                                        <td align="left" colspan="2"><b>1. What is your question?</b></td>
                                                     </tr>
                                                     <tr>
                                                         <td align="left" width="50%">1. OptionA</td>
@@ -1073,35 +1102,29 @@
                                 <ul class="list-group">
                                     <li class="list-group-item">
                                         <label>Clear Database</label>
-                                        <button type="button" onclick="clearDataBase()" style="width:100px;"
-                                                class="btn btn-default btn-xs pull-right">Clear&nbsp;<i
-                                                class="fa fa-trash" aria-hidden="true"></i></button>
+                                        <button type="button" onClick="clearDataBase()" style="width:100px;" class="btn btn-default btn-xs pull-right">Clear&nbsp;<i class="fa fa-trash" aria-hidden="true"></i></button>
                                     </li>
                                     <li class="list-group-item">
                                         <label>Export Database</label>
-                                        <button type="button" onclick="exportDataBase()" style="width:100px;"
-                                                class="btn btn-default btn-xs pull-right">Export&nbsp; <i
-                                                class="fa fa-download" aria-hidden="true"></i></button>
+                                        <button type="button" onClick="exportDataBase()" style="width:100px;" class="btn btn-default btn-xs pull-right">Export&nbsp; <i class="fa fa-download" aria-hidden="true"></i></button>
                                     </li>
                                     <li class="list-group-item">
                                         <label>Import Database</label>
                                         <!--<button type="button" onClick="importDataBase()" style="width:100px;" >Import</button>-->
-                                        <input type="file" id="files" accept="text/json"
-                                               onchange="importDataBase(event)" name="files"
-                                               class="btn btn-default btn-xs pull-right">
+                                        <input type="file" id="files" accept="text/json" onChange="importDataBase(event)" name="files" class="btn btn-default btn-xs pull-right" />
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-                <footer>© 2018 Concept Apps</footer>
+                <footer>© 2020 Rajmarg Competitive Academy Nanded Maharashtra</footer>
             </div>
         </div>
     </div>
 
     <!----modal starts here--->
-    <div id="deleteModal" class="modal fade" role="dialog">
+    <div id="deleteModal" class="modal fade" role='dialog'>
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -1113,14 +1136,12 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                    <span id="deleteButton"></span>
+                    <span id= 'deleteButton'></span>
                 </div>
             </div>
         </div>
     </div>
 
 </div>
-
-
 </body>
 </html>
