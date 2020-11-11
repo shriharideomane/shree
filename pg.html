@@ -439,13 +439,12 @@
 	
 	function downloadJsonFile() {
             //var a = document.createElement("a");
-            var file = new Blob([JSON.stringify(combinedResult)], {type: 'application/json'});
+            //var file = new Blob([JSON.stringify(combinedResult)], {type: 'application/json'});
             //a.href = URL.createObjectURL(file);
             //a.download = 'json.json';
             //a.click();
 
-           // download('data.json', JSON.stringify(combinedResult))
-           downloadBlob('data.json', JSON.stringify(combinedResult))
+           download('data.json', JSON.stringify(combinedResult))
         }
 
         function download(filename, text) {
@@ -457,22 +456,7 @@
           element.click();
           document.body.removeChild(element);
         }
-
-        function downloadBlob(filename, data){
-            var blob = new Blob([data], {type: 'text/csv'});
-            if(window.navigator.msSaveOrOpenBlob) {
-                window.navigator.msSaveBlob(blob, filename);
-            }
-            else{
-                var elem = window.document.createElement('a');
-                elem.href = window.URL.createObjectURL(blob);
-                elem.download = filename;
-                document.body.appendChild(elem);
-                elem.click();
-                document.body.removeChild(elem);
-            }
-        }
-
+	
         function exportDataBase() {
             db.transaction(function(tx) {
 
