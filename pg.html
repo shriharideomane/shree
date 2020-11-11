@@ -400,7 +400,7 @@
                         db.transaction(function(tx) {
                             tx.executeSql('INSERT INTO HEADING (heading, subheading, date, totalmark, duration) VALUES (?, ?, ?, ?, ?)', [headingItem.heading, headingItem.subheading, headingItem.date, headingItem.totalmark, headingItem.duration],
                                 function(tx, result) {
-                                    //alert("Heading Loaded Successfully");
+                                    alert("Data loaded successfully");
                                 },
                                 function(tx, error) {
                                     alert("Error:" + error.message);
