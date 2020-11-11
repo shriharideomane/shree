@@ -355,7 +355,19 @@
 						console.log('Item: ', obj);
 						list += '<li class="list-group-item"><label style="width:70%;word-wrap: break-word;font-weight: normal;">' + obj.question + '</label>';
 						list += '<div class="btn-group pull-right">';
-						list += '<button type="button" data-animal-type=\''+parseMe(obj)+'\' onClick="confirmEdit(this)" class="btn btn-default btn-xs">Edit</button>';
+						list += '<button type="button" data-animal-type=\''+parseMe(obj)+'\' onClick="
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						(this)" class="btn btn-default btn-xs">Edit</button>';
 						list += '<button type="button" data-animal-type=\''+results.rows.item(i).rowid+'\' onClick="confirmDelete(this)" class="btn btn-default btn-xs">Delete</button>';
 						list += '</div>';
 						list += '</li>';
@@ -520,12 +532,12 @@
 						$("#rqop7").text(objQOptions.right[6]);
 						$("#rqop8").text(objQOptions.right[7]);
 					}else{
-						$(".collapse").collapse('hide');
+						//$(".collapse").collapse('hide');
 					}
 				}else{
-					$(".collapse").collapse('hide');
+					//$(".collapse").collapse('hide');
 				}
-				activeTab("tab1success");
+				
 				$("#btnUpdate").show();
 				$("#btnUpdate").val(obj.rowid);
 				$("#btnAdd").hide();
@@ -538,6 +550,7 @@
 				$("#option4").text(obj.option4);
 				$("#answerindex").val(obj.ansindex);
 				$("#mark").val(obj.mark);
+			activeTab("tab1success");
 		}
 		function confirmDeleteModal(id){
 			$('#deleteModal').modal();
