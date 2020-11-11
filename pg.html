@@ -436,13 +436,25 @@
         }
 
         var combinedResult = { HEADING:'', QUESTIONS:''};
+	
+	function downloadJsonFile() {
+            //var a = document.createElement("a");
+            //var file = new Blob([JSON.stringify(combinedResult)], {type: 'application/json'});
+            //a.href = URL.createObjectURL(file);
+            //a.download = 'json.json';
+            //a.click();
 
-        function downloadJsonFile() {
-            var a = document.createElement("a");
-            var file = new Blob([JSON.stringify(combinedResult)], {type: 'application/json'});
-            a.href = URL.createObjectURL(file);
-            a.download = 'json.txt';
-            a.click();
+            download('TestData.json', JSON.stringify(combinedResult))
+        }
+
+        function download(filename, text) {
+          var element = document.createElement('a');
+          element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+          element.setAttribute('download', filename);
+          element.style.display = 'none';
+          document.body.appendChild(element);
+          element.click();
+          document.body.removeChild(element);
         }
 
         function exportDataBase() {
