@@ -368,7 +368,8 @@
 						
 						
 						(this)" class="btn btn-default btn-xs">Edit</button>';
-						list += '<button type="button" data-animal-type=\''+results.rows.item(i).rowid+'\' onClick="confirmDelete(this)" class="btn btn-default btn-xs">Delete</button>';
+						list += '<button type="button" data-animal-type=\''+results.rows.item(i).rowid+'\' onClick="
+			    Delete(this)" class="btn btn-default btn-xs">Delete</button>';
 						list += '</div>';
 						list += '</li>';
 
@@ -509,7 +510,7 @@
 			console.log(removeObjectQuote);
 			var obj = JSON.parse(removeObjectQuote);
 
-			
+			activeTab("tab1success");
 				if(obj.type){
 
 					var objQOptions = obj.qoptions;
@@ -532,10 +533,10 @@
 						$("#rqop7").text(objQOptions.right[6]);
 						$("#rqop8").text(objQOptions.right[7]);
 					}else{
-						//$(".collapse").collapse('hide');
+						$(".collapse").collapse('hide');
 					}
 				}else{
-					//$(".collapse").collapse('hide');
+					$(".collapse").collapse('hide');
 				}
 				
 				$("#btnUpdate").show();
@@ -550,7 +551,7 @@
 				$("#option4").text(obj.option4);
 				$("#answerindex").val(obj.ansindex);
 				$("#mark").val(obj.mark);
-			activeTab("tab1success");
+			
 		}
 		function confirmDeleteModal(id){
 			$('#deleteModal').modal();
