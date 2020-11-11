@@ -355,21 +355,8 @@
 						console.log('Item: ', obj);
 						list += '<li class="list-group-item"><label style="width:70%;word-wrap: break-word;font-weight: normal;">' + obj.question + '</label>';
 						list += '<div class="btn-group pull-right">';
-						list += '<button type="button" data-animal-type=\''+parseMe(obj)+'\' onClick="
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						(this)" class="btn btn-default btn-xs">Edit</button>';
-						list += '<button type="button" data-animal-type=\''+results.rows.item(i).rowid+'\' onClick="
-			    Delete(this)" class="btn btn-default btn-xs">Delete</button>';
+						list += '<button type="button" data-animal-type=\''+parseMe(obj)+'\' onClick="confirmEdit(this)" class="btn btn-default btn-xs">Edit</button>';
+						list += '<button type="button" data-animal-type=\''+results.rows.item(i).rowid+'\' onClick="confirmDelete(this)" class="btn btn-default btn-xs">Delete</button>';
 						list += '</div>';
 						list += '</li>';
 
@@ -413,7 +400,7 @@
                         db.transaction(function(tx) {
                             tx.executeSql('INSERT INTO HEADING (heading, subheading, date, totalmark, duration) VALUES (?, ?, ?, ?, ?)', [headingItem.heading, headingItem.subheading, headingItem.date, headingItem.totalmark, headingItem.duration],
                                 function(tx, result) {
-                                    alert("Data loaded successfully");
+                                    alert("Data loaded Successfully");
                                 },
                                 function(tx, error) {
                                     alert("Error:" + error.message);
@@ -449,10 +436,10 @@
         }
 
         var combinedResult = { HEADING:'', QUESTIONS:''};
-	
-	function downloadJsonFile() {
+
+        function downloadJsonFile() {
             //var a = document.createElement("a");
-            //var file = new Blob([JSON.stringify(combinedResult)], {type: 'application/json'});
+            var file = new Blob([JSON.stringify(combinedResult)], {type: 'application/json'});
             //a.href = URL.createObjectURL(file);
             //a.download = 'json.json';
             //a.click();
@@ -469,7 +456,7 @@
           element.click();
           document.body.removeChild(element);
         }
-	
+
         function exportDataBase() {
             db.transaction(function(tx) {
 
@@ -538,7 +525,6 @@
 				}else{
 					$(".collapse").collapse('hide');
 				}
-				
 				$("#btnUpdate").show();
 				$("#btnUpdate").val(obj.rowid);
 				$("#btnAdd").hide();
@@ -551,7 +537,6 @@
 				$("#option4").text(obj.option4);
 				$("#answerindex").val(obj.ansindex);
 				$("#mark").val(obj.mark);
-			
 		}
 		function confirmDeleteModal(id){
 			$('#deleteModal').modal();
