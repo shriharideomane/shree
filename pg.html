@@ -497,7 +497,7 @@
 			console.log(removeObjectQuote);
 			var obj = JSON.parse(removeObjectQuote);
 
-			activeTab("tab1success");
+			
 				if(obj.type){
 
 					var objQOptions = obj.qoptions;
@@ -525,6 +525,7 @@
 				}else{
 					$(".collapse").collapse('hide');
 				}
+				activeTab("tab1success");
 				$("#btnUpdate").show();
 				$("#btnUpdate").val(obj.rowid);
 				$("#btnAdd").hide();
