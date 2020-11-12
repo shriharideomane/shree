@@ -333,7 +333,7 @@
             db.transaction(function(tx) {
                 tx.executeSql('INSERT INTO HEADING (heading, subheading, date, totalmark, duration) VALUES (?, ?, ?, ?, ?)', [heading, subheading, date, totalmark, duration],
                     function(tx, result) {
-                        alert("Heading Added Successfully");
+                        //alert("Heading Added Successfully");
                     },
                     function(tx, error) {
                         alert("Error:" + error.message);
@@ -400,7 +400,7 @@
                         db.transaction(function(tx) {
                             tx.executeSql('INSERT INTO HEADING (heading, subheading, date, totalmark, duration) VALUES (?, ?, ?, ?, ?)', [headingItem.heading, headingItem.subheading, headingItem.date, headingItem.totalmark, headingItem.duration],
                                 function(tx, result) {
-                                    alert("Data loaded Successfully");
+                                    //alert("Data loaded Successfully");
                                 },
                                 function(tx, error) {
                                     alert("Error:" + error.message);
@@ -411,13 +411,12 @@
                     // Load Question Table
                     var questions = jObj.QUESTIONS;
                     if(questions != null){
-                        for (i = 0; i < Object.keys(questions).length; i++) {
-                            var questionItem = questions[i];
-                            db.transaction(function(tx) {
+                        db.transaction(function(tx) {
+                            for (var Q = 0; Q < Object.keys(questions).length; Q++) {
+                                var questionItem = questions[Q];
                                 tx.executeSql('INSERT INTO QUESTIONS (subject, type, question, qoptions, option1, option2, option3, option4, ansindex, mark) VALUES (?, ?, ?, ?, ?, ?, ? ,?, ?, ?)', [questionItem.subject, questionItem.type, questionItem.question, questionItem.qOptions, questionItem.option1, questionItem.option2, questionItem.option3, questionItem.option4, questionItem.ansindex, questionItem.mark],
                                 function(tx, result) {
-                                    //alert("Question Added Successfully");
-                                    if(i == Object.keys(questions).length){
+                                    if(Q == Object.keys(questions).length){
                                         readQuestion();
                                         activeTab("tab2success");
                                     }
@@ -425,8 +424,8 @@
                                 function(tx, error) {
                                     alert("Error:" + error.message);
                                 });
-                            });
-                        }
+                            }
+                        });
                     }
                 };
               })(f);
