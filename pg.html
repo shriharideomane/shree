@@ -19,7 +19,7 @@
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" defer src="https://www.google.com/jsapi"></script>
-    
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -592,7 +592,7 @@
 						}
 						table += "</table>";
 						var addPairings = isPairingAvailable ? '<tr><td colspan="2">'+table+'</td></tr>' : '';
-                        list += '<table class="table borderless qrow" style="word-wrap:break-word; table-layout: fixed;"><tbody><tr><td align="left"><b>' + (i + 1) + ') ' + results.rows.item(i).question + '</td><td align="right"><span>'+ results.rows.item(i).mark +'</span></td></tr>'+ addPairings +'<tr><td align="left" width="50%" style="padding-left:30px;">1. ' + results.rows.item(i).option1 + '</td><td align="left" width="50%">2. ' + results.rows.item(i).option2 + '</td></tr><tr><td align="left" width="50%" style="padding-left:30px;">3. ' + results.rows.item(i).option3 + '</td><td align="left" width="50%">4. ' + results.rows.item(i).option4 + '</td></tr></tbody></table><hr>';
+                        list += '<div class="print-friendly"><table class="table borderless" style="word-wrap:break-word; table-layout: fixed;"><tbody><tr><td align="left" colspan="2"><h4><b>' + (i + 1) + ') ' + results.rows.item(i).question + ' <span style="float: right;">'+ results.rows.item(i).mark +'</span></b></h4></td></tr>'+ addPairings +'<tr><td align="left" width="50%" style="padding-left:30px;"><h4>1) ' + results.rows.item(i).option1 + '</h4></td><td align="left" width="50%"><h4>2) ' + results.rows.item(i).option2 + '</h4></td></tr><tr><td align="left" width="50%" style="padding-left:30px;"><h4>3) ' + results.rows.item(i).option3 + '</h4></td><td align="left" width="50%"><h4>4) ' + results.rows.item(i).option4 + '</h4></td></tr></tbody></table><hr style="padding:0px;margin:0px;"></div>';
                         isPairingAvailable = false;
                     }
                     $("#tblContent").html(list);
@@ -626,14 +626,23 @@
     <style media="all">
         * {
             /* font-family: Arial, Helvetica, sans-serif;
-            font-family: Arial, Helvetica, sans-serif; */
+             font-family: Arial, Helvetica, sans-serif; */
             font-family: "Times New Roman", Times, serif;
 
+        }
+
+        .print-friendly {
+            page-break-inside: avoid !important;
+            margin: 4px 0 4px 0;
         }
 
 	    .container{
             padding-left: 0px;
             padding-right: 0px;
+        }
+
+        .table thead tr td, .table thead tr th {
+            padding: 0px;
         }
 
         .btn-group.special {
@@ -796,16 +805,15 @@
             border-spacing: 0;
             font-weight: bold;
             overflow: hidden;
-    perspective: 1px;
+            perspective: 1px;
         }
         table.roundedCorners, roundedCorners.td {
             border: 2px solid black;
             border-radius: 15px;
             -moz-border-radius: 15px;
-           border-collapse: separate;
-           overflow: hidden;
-    perspective: 1px;
-
+            border-collapse: separate;
+            overflow: hidden;
+            perspective: 1px;
         }
 
         table.testID{
@@ -815,17 +823,13 @@
 
     </style>
     <style media="print">
-    body {
-       display:table;
-       table-layout:fixed;
-       padding-top:1.0cm;
-       padding-bottom:1.0cm;
-       height:auto;
-    }
-    .qrow {
-        page-break-inside: avoid;
-    }
-}
+        body {
+           display:table;
+           table-layout:fixed;
+           padding-top:1.0cm;
+           padding-bottom:1.0cm;
+           height:auto;
+        }
     </style>
 </head>
 
@@ -1023,7 +1027,7 @@
                                     <tr>
                                         <td colspan="3">
                                             <table class="roundedCorners">
-                                                <tr>
+                                                <tr bgcolor="#F2FFFF" >
                                                     <td style="padding-left:30px; padding-right:30px; border-bottom: solid 3px #000;" align="center"><img width="200px" src="img.png"></td>
                                                     <td colspan="2"
                                                         style="padding:30px; font-size:45px;text-align:center;border-bottom: solid 3px #000;"
@@ -1031,7 +1035,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td bgcolor="#FFCC00" colspan="3" style="padding-left:30px; padding-right:30px; border-bottom: solid 3px #000;">
+                                                    <td colspan="3" style="padding-left:30px; padding-right:30px; border-bottom: solid 3px #000;">
                                                         <table width="100%">
                                                             <tr>
                                                                 <td><h4>वेळ : <label id="pTime">1</label> तास</h4></td>
@@ -1064,11 +1068,7 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td colspan="3" align="center" style="padding-left:30px; padding-right:30px"><h4>आपला निकाल;
-                                                        व्यवस्थितपणे येण्यासाठी आपल्याला दिलेल्या आपला निकाल
-                                                        व्यवस्थितपणे येण्यासाठी आपल्याला दिलेल्या आपला निकाल
-                                                        व्यवस्थितपणे येण्यासाठी आपल्याला दिलेल्या आपला निकाल
-                                                        व्यवस्थितपणे येण्यासाठी आपल्याला दिलेल्याl</h4></td>
+                                                    <td colspan="3" align="center" style="padding-left:30px; padding-right:30px"><h4>आपला निकाल व्यवस्थितपणे येण्यासाठी आपल्याला दिलेली OMR Sheet खाली दिलेल्या पद्धतीने बारा. रोल नंबर आपल्या सर्वांना दिलेली आहेत. तसेच Test ID पेपर वर दिलेला आहे. चुकीच्या पद्धतीने भरलेल्या पेपर तपासला जाणार नाही.</h4></td>
                                                 </tr>
                                                 <tr>
                                                     <td colspan="3" style="padding-left:30px" align="left">Sample Image</td>
