@@ -73,7 +73,7 @@
       }
     ],
     "subTitle": "MPSC",
-    "testDuration": 7200000,
+    "testDuration": "0.15" ,
     "title": "Rajmarg Competitive Academy"
   }
 ]
