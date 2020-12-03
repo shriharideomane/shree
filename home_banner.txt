@@ -1,0 +1,14 @@
+[
+  {
+    "bannerTitle": "Batches PSI/STI/ASO",
+    "bannerUrl": "https://scontent.fpnq7-1.fna.fbcdn.net/v/t1.0-9/81637355_2486665588318264_1800797332430651392_o.jpg?_nc_cat=111&ccb=2&_nc_sid=110474&_nc_ohc=jp8l9SOv1yIAX8_reaB&_nc_ht=scontent.fpnq7-1.fna&oh=dc9f0852f794482631ff0ee904571024&oe=5FEDAA56",
+    "isBannerPublished": true,
+    "bannerExpireDate": 11-05-2020
+  },
+  {
+    "bannerTitle": "CSAT Full Test Series",
+    "bannerUrl": "https://scontent.fpnq7-2.fna.fbcdn.net/v/t1.0-9/80556674_3488178387889778_884429020031090688_n.jpg?_nc_cat=107&ccb=2&_nc_sid=110474&_nc_ohc=ye9uBayMin4AX-5dhcl&_nc_ht=scontent.fpnq7-2.fna&oh=bf3b9c788a7c576b0aa44c305ebbba25&oe=5FEEBA44",
+    "isBannerPublished": true,
+    "bannerExpireDate": 11-05-2020
+  }
+]
