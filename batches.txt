@@ -1,26 +1,17 @@
 [
-        {
-            "combine_pre_cum_mains_foundation": "Combine Pre Cum Mains Foundation"
-        },
-        {
-            "mpsc_gazetted_super_60": "MPSC Gazetted Super 60"
-        },
-        {
-            "mpsc_state_services_foundation": "MPSC State Services Foundation"
-        },
-        {
-            "mpsc_weekend_batch_sat_sun": "MPSC Weekend Batch Sat Sun"
-        },
-        {
-            "special_english_super_60": "Special English Super 60"
-        },
-        {
-            "special_marathi_super_60": "Special Marathi Super 60"
-        },
-        {
-            "special_math_and_reasoning_super_60": "Special Math and Reasoning Super 60"
-        },
-        {
-            "upsc_pre_cum_mains_general_studies": "UPSC Pre Cum Mains General Studies"
-        }
+         "Combine Pre Cum Mains Foundation"
+        ,
+            "MPSC Gazetted Super 60"
+        ,
+            "MPSC State Services Foundation"
+        ,
+            "MPSC Weekend Batch Sat Sun"
+        ,
+            "Special English Super 60"
+        ,
+            "Special Marathi Super 60"
+        ,
+            "Special Math and Reasoning Super 60"
+        ,
+            "UPSC Pre Cum Mains General Studies"
 ]
