@@ -1,5 +1,4 @@
-{
-    "Batches": [
+[
         {
             "combine_pre_cum_mains_foundation": "Combine Pre Cum Mains Foundation"
         },
@@ -24,5 +23,4 @@
         {
             "upsc_pre_cum_mains_general_studies": "UPSC Pre Cum Mains General Studies"
         }
-    ]
-}
+]
