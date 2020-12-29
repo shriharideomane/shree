@@ -6,6 +6,7 @@
     "marks": 100,
     "negativeRatio": 0.25,
     "passCriteria": 0,
+    "batches" : ["ALL"], 
     "questions": [
       {
         "mark": "1",
