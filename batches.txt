@@ -1,6 +1,7 @@
 [
-         "ALL", 
-         "Combine Pre Cum Mains Foundation"
+         "Guest"
+        ,
+            "Combine Pre Cum Mains Foundation"
         ,
             "MPSC Gazetted Super 60"
         ,
