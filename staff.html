@@ -201,9 +201,9 @@
     }
 
     .card.hovercard .cardheader {
-        background: url("http://lorempixel.com/850/280/nature/4/");
+        background: url("avtarBg.png");
         background-size: cover;
-        height: 135px;
+        height: 250px;
     }
 
     .card.hovercard .avatar {
@@ -213,10 +213,10 @@
     }
 
     .card.hovercard .avatar img {
-        width: 100px;
-        height: 100px;
-        max-width: 100px;
-        max-height: 100px;
+        width: 250px;
+        height: 250px;
+        max-width: 250px;
+        max-height: 250px;
         -webkit-border-radius: 50%;
         -moz-border-radius: 50%;
         border-radius: 50%;
@@ -250,13 +250,20 @@
 
     .btn{ border-radius: 50%; width:32px; height:32px; line-height:18px;  }
 
+    ul{
+        text-align:left
+    }
+
+    .lead{
+        margin-bottom:0px;
+    }
 
     </style>
     <script>
 
        $(document).ready(function(){
             var request = $.ajax({
-              url: "https://firebasestorage.googleapis.com/v0/b/myapplicationstudio22.appspot.com/o/profile.json?alt=media",
+              url: "staff.json",
               method: "GET",
               dataType: "json"
             });
@@ -268,16 +275,17 @@
             request.fail(function( jqXHR, textStatus ) {
                 alert( "Request failed: " + textStatus );
             });
+
         });
 
-        function loadProfileData(json){
+        function loadProfileData(profileRawData){
 
-            //var profileData =  '{"PROFILES":[{"rowid":1,"name":"Shrihari Deomane","avatar":"http://lorempixel.com/100/100/people/9/","qualification":"Dr","subjects":"Economics","twitter":"https://twitter.com/deomane","google":"https://plus.google.com/+deomane","facebook":"https://plus.google.com/deomane","linkedin":"https://linkedin.com/deomane","description":"About : Curious developer"},{"rowid":2,"name":"Manoj Deomane","avatar":"http://lorempixel.com/100/100/people/9/","qualification":"Dr","subjects":"Economics","twitter":"https://twitter.com/deomane","google":"https://plus.google.com/+deomane","facebook":"https://plus.google.com/deomane","linkedin":"https://linkedin.com/deomane","description":"About : Curious developer"}]}';
-            profileData = jQuery.parseJSON(json)["PROFILES"];
-            var pFormattedData = '<div class="row">';
+            //var profileData = '{"PROFILES":[{"rowid":1,"name":"Mr. Dhananjay Deomane","avatar":"http://lorempixel.com/100/100/people/9/","qualification":"Dr","subjects":"Founder","twitter":"#","google":"#","facebook":"#","linkedin":"#","description":"About : Curious developer"},{"rowid":2,"name":"Mr. Amrit Kumar Singh","avatar":"http://lorempixel.com/100/100/people/9/","qualification":"Dr","subjects":"Polity And Governance, Ethics Cource Co-ordinator","twitter":"#","google":"#","facebook":"#","linkedin":"#","description":"About : <ul><li>Over 5 Years of Experience.</li><li>Over 5 years of experience.</li><li>Also teaches Social issues and Currrent Affairs</li><li>Worked with Deputy Permanent Secretary PMO Mauritus in Research of Managment on the basis of Ramayana and Geeta</li></ul>"},{"rowid":2,"name":"Mr. Anurag Dubbey","avatar":"http://lorempixel.com/100/100/people/9/","qualification":"Dr","subjects":"Economics","twitter":"#","google":"#","facebook":"#","linkedin":"#","description":"About : Curious developer"}]}';
+            var profileData = JSON.parse(JSON.stringify(profileRawData))["PROFILES"];
+            var pFormattedData = '<div class="row" style="margin:10px;">';
             for (var i = 0, len = profileData.length; i < len; i++) {
                 console.log(profileData[i].name);
-                pFormattedData +='    <div class="col-lg-3 col-sm-6">';
+                pFormattedData +='    <div class="col-sm">';
                 pFormattedData +='        <div class="card hovercard">';
                 pFormattedData +='            <div class="cardheader"></div>';
                 pFormattedData +='            <div class="avatar">';
@@ -287,8 +295,11 @@
                 pFormattedData +='                <div class="title">';
                 pFormattedData +='                    <a target="_blank">'+profileData[i].name+'</a>';
                 pFormattedData +='                </div>';
-                pFormattedData +='                <div class="desc">'+profileData[i].qualification+'</div>';
-                pFormattedData +='                <div class="desc">'+profileData[i].subjects+'</div>';
+                pFormattedData +='                <div class="lead">'+profileData[i].qualification+'</div>';
+                pFormattedData +='                <div class="lead">'+profileData[i].subjects+'</div>';
+                pFormattedData +='            </div>';
+                pFormattedData +='            <div class="info">';
+                pFormattedData +='                <div class="lead">'+profileData[i].description+'</div>';
                 pFormattedData +='            </div>';
                 pFormattedData +='            <div class="bottom">';
                 pFormattedData +='                <a class="btn btn-primary btn-twitter btn-sm"';
@@ -319,6 +330,6 @@
     </script>
 </head>
 <body>
-    <div id="profileContainer"/>
+<div id="profileContainer"/>
 </body>
 </html>

@@ -1,0 +1,76 @@
+{
+  "PROFILES": [
+    {
+      "rowid": 1,
+      "name": "Dr. Dhananjay Deomane (Founder)",
+      "avatar": "http://lorempixel.com/100/100/people/9/1.png",
+      "qualification": "B.A.M.S.",
+      "subjects": "Economics, Science",
+      "twitter": "#",
+      "google": "#",
+      "facebook": "#",
+      "linkedin": "#",
+      "description": "About : Curious developer"
+    },
+    {
+      "rowid": 2,
+      "name": "Mr. Amrit Kumar Singh",
+      "avatar": "http://lorempixel.com/100/100/people/9/1.png",
+      "qualification": "",
+      "subjects": "Polity And Governance, Ethics Course Co-ordinator",
+      "twitter": "#",
+      "google": "#",
+      "facebook": "#",
+      "linkedin": "#",
+      "description": "<ul><li>Over 5 Years of Experience.</li><li>Also teaches Social issues and Current Affairs</li><li>Worked with Deputy Permanent Secretary PMO Mauritus in Research of Management on the basis of Ramayana and Geeta</li></ul>"
+    },
+    {
+      "rowid": 3,
+      "name": "Mr. Anurag Dubbey",
+      "avatar": "http://lorempixel.com/100/100/people/9/1.png",
+      "qualification": "Master of Business Administration (MBA)",
+      "subjects": "Modern Indian History, Economics",
+      "twitter": "#",
+      "google": "#",
+      "facebook": "#",
+      "linkedin": "#",
+      "description": "<ul><li>Over 5 Years of Experience.</li><li>Also teaches Internal Security and Current Affairs</li></ul>"
+    },
+    {
+      "rowid": 4,
+      "name": "Miss. Shalini Singh",
+      "avatar": "http://lorempixel.com/100/100/people/9/1.png",
+      "qualification": "M.A. History, PH.D History(Pursuing)",
+      "subjects": "History and Art  and Culture",
+      "twitter": "#",
+      "google": "#",
+      "facebook": "#",
+      "linkedin": "#",
+      "description": "<ul><li>Over 4 Years of Experience.</li><li>Also teaches ISMs Issues</li><li>Wrote two Books on Indian Art and Culture.</li></ul>"
+    },
+    {
+      "rowid": 5,
+      "name": "Dr. Vikash Singh",
+      "avatar": "http://lorempixel.com/100/100/people/9/1.png",
+      "qualification": "Ph.D in Economics",
+      "subjects": "Economics",
+      "twitter": "#",
+      "google": "#",
+      "facebook": "#",
+      "linkedin": "#",
+      "description": "<ul><li>Over 10 Years of Experience.</li><li>Also teaches Rural and Urban Governance</li><li>Institute of Economics and Growth.</li><li>Formerly at Indian Institute of Public Administration (IIPA)</li></ul>"
+    },
+    {
+      "rowid": 6,
+      "name": "Mr. Alok Verma",
+      "avatar": "http://lorempixel.com/100/100/people/9/1.png",
+      "qualification": "Chemical Engineer",
+      "subjects": "Current Affairs",
+      "twitter": "#",
+      "google": "#",
+      "facebook": "#",
+      "linkedin": "#",
+      "description": "<ul><li>Over 6 Years of Experience.</li><li>Also teaches Current Affairs</li></ul>"
+    }
+  ]
+}
