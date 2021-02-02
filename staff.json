@@ -10,12 +10,12 @@
       "google": "#",
       "facebook": "#",
       "linkedin": "#",
-      "description": "About : Curious developer"
+      "description": ""
     },
     {
       "rowid": 2,
       "name": "Mr. Amrit Kumar Singh",
-      "avatar": "http://lorempixel.com/100/100/people/9/1.png",
+      "avatar": "ic_launcher_round.png",
       "qualification": "",
       "subjects": "Polity And Governance, Ethics Course Co-ordinator",
       "twitter": "#",
@@ -27,7 +27,7 @@
     {
       "rowid": 3,
       "name": "Mr. Anurag Dubbey",
-      "avatar": "http://lorempixel.com/100/100/people/9/1.png",
+      "avatar": "ic_launcher_round.png",
       "qualification": "Master of Business Administration (MBA)",
       "subjects": "Modern Indian History, Economics",
       "twitter": "#",
@@ -39,7 +39,7 @@
     {
       "rowid": 4,
       "name": "Miss. Shalini Singh",
-      "avatar": "http://lorempixel.com/100/100/people/9/1.png",
+      "avatar": "ic_launcher_round.png",
       "qualification": "M.A. History, PH.D History(Pursuing)",
       "subjects": "History and Art  and Culture",
       "twitter": "#",
@@ -51,7 +51,7 @@
     {
       "rowid": 5,
       "name": "Dr. Vikash Singh",
-      "avatar": "http://lorempixel.com/100/100/people/9/1.png",
+      "avatar": "ic_launcher_round.png",
       "qualification": "Ph.D in Economics",
       "subjects": "Economics",
       "twitter": "#",
@@ -63,7 +63,7 @@
     {
       "rowid": 6,
       "name": "Mr. Alok Verma",
-      "avatar": "http://lorempixel.com/100/100/people/9/1.png",
+      "avatar": "ic_launcher_round.png",
       "qualification": "Chemical Engineer",
       "subjects": "Current Affairs",
       "twitter": "#",
