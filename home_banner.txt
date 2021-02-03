@@ -24,9 +24,10 @@
     "bannerExpireDate": "11-05-2020"
   },
   {
-    "bannerTitle": "Rajmarg Book Depo",
+    "bannerTitle": "Rajmarg February 2021 Magazine",
     "bannerUrl": "https://scontent.fpnq7-2.fna.fbcdn.net/v/t1.0-9/125789161_1459748897564768_2460044692907936220_o.jpg?_nc_cat=103&ccb=2&_nc_sid=730e14&_nc_ohc=i4ANbOnx6lkAX-_JNeX&_nc_ht=scontent.fpnq7-2.fna&oh=0ae1c655015d4bd3893eb232aec7a598&oe=5FEF9EC6",
-    "isBannerPublished": false,
+    "isBannerPublished": true,
+    "redirectToUrl" : "https://drive.google.com/file/d/1-1v8rjS6Ck9lcQPqvOHvBj2HZU-2kd4D/view?usp=drivesdk", 
     "bannerExpireDate": "11-05-2020"
   }
   
