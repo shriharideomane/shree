@@ -1,19 +1,24 @@
 [
-         "Guest"
+        "Guest"
         ,
-            "Combine Pre Cum Mains Foundation"
+            "UPSC Pre Cum Mains General Studies"
+        ,
+            "UPSC Foundation 2 Years"
         ,
             "MPSC Gazetted Super 60"
         ,
-            "MPSC State Services Foundation"
+            "MPSC Foundation 1 Year"
         ,
-            "MPSC Weekend Batch Sat Sun"
+            "MPSC Foundation 6 Months"
         ,
-            "Special English Super 60"
+            "MPSC Combine Batch"
         ,
-            "Special Marathi Super 60"
+            "MPSC Weekend Sat And Sun"
+        ,    
+            "Special C-SAT Batch"
+        ,    
+            "Special English Batch"
         ,
-            "Special Math and Reasoning Super 60"
-        ,
-            "UPSC Pre Cum Mains General Studies"
+            "Special Marathi Batch"
+            
 ]
