@@ -1,5 +1,12 @@
 [
   {
+    "bannerTitle": "Rajmarg IAS",
+    "bannerUrl": "https://img.youtube.com/vi/0N31i1ieR20/0.jpg",
+    "isBannerPublished": true,
+    "redirectToUrl" : "https://www.youtube.com/watch?v=0N31i1ieR20",
+    "bannerExpireDate": "12-03-2021"
+  }, 
+  {
     "bannerTitle": "Rajmarg January 2021 Magazine",
     "bannerUrl": "https://shriharideomane.github.io/shree/RajmargJanuaryMagazine.jpg",
     "isBannerPublished": true,
