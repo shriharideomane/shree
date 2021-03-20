@@ -7,6 +7,13 @@
     "bannerExpireDate": "12-03-2021"
   }, 
   {
+    "bannerTitle": "Rajmarg February 2021 Magazine",
+    "bannerUrl": "https://shriharideomane.github.io/shree/RajmargFebruaryMagazine.jpg",
+    "isBannerPublished": true,
+    "redirectToUrl": "https://drive.google.com/file/d/11v4R6bKGhc8-AjqhG6PoxUNwP31mi9yt/view?usp=drivesdk", 
+    "bannerExpireDate": "11-05-2020"
+  },
+  {
     "bannerTitle": "Rajmarg January 2021 Magazine",
     "bannerUrl": "https://shriharideomane.github.io/shree/RajmargJanuaryMagazine.jpg",
     "isBannerPublished": true,
